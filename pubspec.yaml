@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   flutter_spinkit: ^4.1.1
   pinput: 0.1.10
+  google_maps_flutter: 0.5.21+12
 
 dev_dependencies:
   flutter_test:
