@@ -39,12 +39,12 @@ class FoodMenuWidget extends StatelessWidget {
                 days: "3",
                 price: "89",
               ),
-              mDivider(),
+              mDivider(color: 0xFF707070,height: 36,width: 2,),
               PriceWidget(
                 days: "7",
                 price: "99",
               ),
-              mDivider(),
+              mDivider(color: 0xFF707070,height: 36,width: 2,),
               PriceWidget(
                 days: "30",
                 price: "102",
