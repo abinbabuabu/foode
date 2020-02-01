@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:foodie/Delete/Sample.dart';
+import 'package:foodie/pages/DetailsPage.dart';
 import 'package:foodie/pages/LoginPage.dart';
 import 'package:foodie/pages/MapPage.dart';
 import 'package:foodie/pages/OtpPage.dart';
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
         canvasColor: Colors.transparent,
         fontFamily: "Montseratt"
       ),
-      home: MapPage()
+      home: DetailsPage()
     );
   }
 }

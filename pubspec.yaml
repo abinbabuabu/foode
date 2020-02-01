@@ -68,6 +68,12 @@ flutter:
     - family: MontserratB
       fonts:
         - asset: assets/fonts/Montserrat-SemiBold.ttf
+
+    - family: MontserratBB
+      fonts:
+        - asset: assets/fonts/Montserrat-Bold.ttf
+
+
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:
