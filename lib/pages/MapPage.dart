@@ -44,7 +44,7 @@ class MapPage extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
-              mButton(
+              AccentButton(
                 listener: () {
                   showModalBottomSheet(
                     isScrollControlled: true,

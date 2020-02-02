@@ -93,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Visibility(
                       visible: _visibility,
-                      child: mButton(
+                      child: AccentButton(
                         listener: () {
                           if (_formKey.currentState.validate()) {
                             setState(() {

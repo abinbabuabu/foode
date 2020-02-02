@@ -45,7 +45,7 @@ class _OtpPageState extends State<OtpPage> {
               SizedBox(height: 20,),
               Visibility(
                 visible: _visibility,
-                child: mButton(
+                child: AccentButton(
                   listener: () {
                     _otpSubmit();
                   },

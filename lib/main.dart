@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:foodie/pages/DetailsPage.dart';
 import 'package:foodie/pages/MealDetailPage.dart';
+import 'package:foodie/pages/Splash.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         canvasColor: Colors.transparent,
         fontFamily: "Montseratt"
       ),
-      home:MealDetailPage()
+      home:Splash()
     );
   }
 }

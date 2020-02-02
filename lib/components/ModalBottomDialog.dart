@@ -32,7 +32,7 @@ class ModalBottomDialog extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.all(8.0),
-              child: mButton(
+              child: AccentButton(
                 listener: () {
                 },
                 text: "Add Address",
