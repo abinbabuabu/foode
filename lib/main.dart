@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         canvasColor: Colors.transparent,
         fontFamily: "Montseratt"
       ),
-      home:LoginPage()
+      home:MealDetailPage()
     );
   }
 }

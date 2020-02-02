@@ -32,7 +32,7 @@ class MealDetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(
-                          height: _topHeight / 2,
+                          height: _topHeight / 2+20,
                         ),
                         TextUnderlineWidget(
                           text: "View Plan",
