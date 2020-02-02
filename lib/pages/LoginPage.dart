@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:foodie/Provider/LoginProvider.dart';
 import 'package:foodie/components/Button.dart';
+import 'package:foodie/components/RouteAnimation.dart';
+import 'package:foodie/pages/OtpPage.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,12 +18,18 @@ class _LoginPageState extends State<LoginPage> {
   final _visibilityKey = GlobalKey();
   final _focusNode = FocusNode();
   bool _visibility = true;
+  var provider;
+  String phone;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
- final spinKit = SpinKitThreeBounce(color: Color(0xFFFFF500),size: 30,);
-  
+  final spinKit = SpinKitThreeBounce(
+    color: Color(0xFFFFF500),
+    size: 30,
+  );
 
   @override
   void initState() {
+    LoginProvider.instantiate();
     _focusNode.addListener(toggleVisibility);
     super.initState();
   }
@@ -27,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: SafeArea(
         child: SingleChildScrollView(
             child: Stack(
@@ -68,6 +79,9 @@ class _LoginPageState extends State<LoginPage> {
                       child: Form(
                           key: _formKey,
                           child: TextFormField(
+                            onChanged: (value){
+                              phone = value;
+                            },
                             focusNode: _focusNode,
                             validator: (value) {
                               if (value.length != 10) {
@@ -99,6 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                             setState(() {
                               _visibility = false;
                             });
+                            startPhoneAuth(phone, context);
                             print("Next");
                           }
                         },
@@ -107,10 +122,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Visibility(
                       visible: !_visibility,
-                      child: spinKit ,
+                      child: spinKit,
                     ),
                     Container(
-                      key:_visibilityKey ,
+                      key: _visibilityKey,
                       height: 1,
                     )
                   ],
@@ -123,9 +138,20 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   void toggleVisibility() {
     print("Called Visiblity Check");
     Scrollable.ensureVisible(_visibilityKey.currentContext);
+  }
+
+  startPhoneAuth(String phone, BuildContext navcontext) {
+    LoginProvider.startAuth(phoneNumber: "+91" + phone);
+    LoginProvider.stateStream.listen((state) {
+      if (state == PhoneAuthState.CodeSent) {
+        Navigator.of(_scaffoldKey.currentContext)
+            .pushReplacement(SlideRightRoute(page: OtpPage()));
+      }
+      if (state == PhoneAuthState.Failed)
+        debugPrint("Seems there is an issue with it");
+    });
   }
 }

@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:foodie/Provider/LoginProvider.dart';
 import 'package:foodie/components/Button.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
@@ -12,6 +13,7 @@ class OtpPage extends StatefulWidget {
 
 class _OtpPageState extends State<OtpPage> {
   bool _visibility = true;
+  String otp;
   final spinKit = SpinKitThreeBounce(color: Color(0xFFFFF500),size: 30,);
 
   @override
@@ -38,7 +40,10 @@ class _OtpPageState extends State<OtpPage> {
                         .width - 80,
                     child: PinPut(
                       fieldsCount: 6,
-                      onSubmit: _otpSubmit,
+                      onSubmit: (value){
+                        otp = value;
+                        otpSubmit(otp);
+                      },
                       actionButtonsEnabled: false,
                     )),
               ),
@@ -47,7 +52,7 @@ class _OtpPageState extends State<OtpPage> {
                 visible: _visibility,
                 child: AccentButton(
                   listener: () {
-                    _otpSubmit();
+                    otpSubmit(otp);
                   },
                   text: "Verify",
                 ),
@@ -60,9 +65,10 @@ class _OtpPageState extends State<OtpPage> {
     );
   }
 
-  _otpSubmit() {
+  otpSubmit(String otp) {
     setState(() {
       _visibility = false;
     });
+    LoginProvider.signInWithPhoneNumber(otp);
   }
 }
