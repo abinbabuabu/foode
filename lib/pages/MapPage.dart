@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/components/Button.dart';
 import 'package:foodie/components/ModalBottomDialog.dart';
+import 'package:foodie/components/SearchDelegate.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,22 +22,33 @@ class MapPage extends StatelessWidget {
                 "Search for a location",
                 style: TextStyle(color: Color(0xFF7B4E06)),
               ),
-              TextField(
-                enabled: false,
-                decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    disabledBorder: UnderlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Theme.of(context).primaryColor))),
+              GestureDetector(
+                onTap: (){
+                  print("Clicked Search");
+                 showSearch(context: context, delegate: CustomSearch());
+                },
+                child: AbsorbPointer(
+                  child: TextField(
+                    onTap: (){
+
+                    },
+                    enabled: false,
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        disabledBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Theme.of(context).primaryColor))),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 30,
               ),
               Container(
-                  color: Colors.green,
+                  color: Colors.grey,
                   height: MediaQuery.of(context).size.height - 240,
                   child: GoogleMap(
                     initialCameraPosition:

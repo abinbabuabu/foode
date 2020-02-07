@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:foodie/Provider/LoginProvider.dart';
 import 'package:foodie/components/Button.dart';
+import 'package:foodie/components/RouteAnimation.dart';
+import 'package:foodie/pages/MapPage.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
 class OtpPage extends StatefulWidget {
@@ -15,10 +17,18 @@ class _OtpPageState extends State<OtpPage> {
   bool _visibility = true;
   String otp;
   final spinKit = SpinKitThreeBounce(color: Color(0xFFFFF500),size: 30,);
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    autoCodeRetrieve();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(20.0),
@@ -63,6 +73,27 @@ class _OtpPageState extends State<OtpPage> {
         ),
       ),
     );
+  }
+  autoCodeRetrieve() {
+    LoginProvider.stateStream.listen((state) {
+      if (state == PhoneAuthState.Verified) {
+        FocusScope.of(context).unfocus();
+        print("called");
+        Navigator.of(_scaffoldKey.currentContext).pushReplacement(SlideRightRoute(page: MapPage()));
+      }
+      else if (state == PhoneAuthState.newUser) {
+        print(state);
+        Navigator.of(_scaffoldKey.currentContext).pushReplacement(SlideRightRoute(page: MapPage()));
+      }
+      else{
+       /* _displaySnackBar(context, "Login failed!  Try again later ");
+        Future.delayed(Duration(seconds: 8),(){
+          Navigator.of(_scaffoldKey.currentContext).pushReplacementNamed(HomePage.routeName);
+        }) ;
+
+        */
+      }
+    });
   }
 
   otpSubmit(String otp) {

@@ -94,7 +94,8 @@ class LoginProvider{
     firebaseAuth.signInWithCredential(auth).then((AuthResult value) {
       if (value.user != null) {
         addStatus(status = 'Authentication successful');
-        // addState(PhoneAuthState.Verified);
+        //remove this to add new user check and add onAuthChange
+        addState(PhoneAuthState.Verified);
       } else {
         addState(PhoneAuthState.Failed);
         addStatus('Invalid code/invalid authentication');
@@ -111,8 +112,8 @@ class LoginProvider{
 
     firebaseAuth.signInWithCredential(_authCredential).then((user) async {
       addStatus('Authentication successful');
-      //addState(PhoneAuthState.Verified);
-      onAuthenticationSuccessful();
+      addState(PhoneAuthState.Verified);
+     // onAuthenticationSuccessful();
     }).catchError((error) {
       addState(PhoneAuthState.Error);
       addStatus(
