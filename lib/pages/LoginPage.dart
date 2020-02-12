@@ -82,6 +82,16 @@ class _LoginPageState extends State<LoginPage> {
                             onChanged: (value){
                               phone = value;
                             },
+                            onFieldSubmitted: (value){
+                              if (_formKey.currentState.validate()) {
+                                setState(() {
+                                  _visibility = false;
+                                });
+                                startPhoneAuth(phone, context);
+                                print("Next");
+                              }
+                            },
+                            keyboardType:TextInputType.phone,
                             focusNode: _focusNode,
                             validator: (value) {
                               if (value.length != 10) {

@@ -14,3 +14,10 @@ class SearchResult {
 
   SearchResult(this.desc, this.log, this.lat);
 }
+class LocationResult {
+  String name;
+  String locality;
+  String latlng;
+  String formattedAddress;
+  String placeId;
+}

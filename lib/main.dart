@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:foodie/Provider/LoginProvider.dart';
+import 'package:foodie/Provider/MapProvider.dart';
 import 'package:foodie/Provider/PlacesProvider.dart';
-import 'package:foodie/pages/DetailsPage.dart';
 import 'package:foodie/pages/LoginPage.dart';
-import 'package:foodie/pages/MapPage.dart';
 import 'package:foodie/pages/MealDetailPage.dart';
-import 'package:foodie/pages/Splash.dart';
-import 'package:foodie/pages/SubscriptionPage.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
@@ -26,6 +22,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<PlacesProvider>(
           create: (_) => PlacesProvider.instance(),
+        ),
+        ChangeNotifierProvider<MapProvider>(
+          create: (_)=> MapProvider(),
         )
       ],
       child: MaterialApp(
@@ -38,7 +37,7 @@ class MyApp extends StatelessWidget {
           bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.transparent),
           fontFamily: "Montseratt"
         ),
-        home:MapPage()
+        home:LoginPage()
       ),
     );
   }

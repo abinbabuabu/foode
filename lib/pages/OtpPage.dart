@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -16,8 +15,12 @@ class OtpPage extends StatefulWidget {
 class _OtpPageState extends State<OtpPage> {
   bool _visibility = true;
   String otp;
-  final spinKit = SpinKitThreeBounce(color: Color(0xFFFFF500),size: 30,);
+  final spinKit = SpinKitThreeBounce(
+    color: Color(0xFFFFF500),
+    size: 30,
+  );
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _globalKey = GlobalKey();
 
   @override
   void initState() {
@@ -44,20 +47,19 @@ class _OtpPageState extends State<OtpPage> {
               Align(
                 alignment: Alignment.center,
                 child: Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width - 80,
+                    width: MediaQuery.of(context).size.width - 80,
                     child: PinPut(
                       fieldsCount: 6,
-                      onSubmit: (value){
+                      onSubmit: (value) {
                         otp = value;
                         otpSubmit(otp);
                       },
                       actionButtonsEnabled: false,
                     )),
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Visibility(
                 visible: _visibility,
                 child: AccentButton(
@@ -67,26 +69,37 @@ class _OtpPageState extends State<OtpPage> {
                   text: "Verify",
                 ),
               ),
-              Visibility(visible: !_visibility, child:spinKit,)
+              Visibility(
+                visible: !_visibility,
+                child: spinKit,
+              )
             ],
           ),
         ),
       ),
     );
   }
+
   autoCodeRetrieve() {
     LoginProvider.stateStream.listen((state) {
       if (state == PhoneAuthState.Verified) {
         FocusScope.of(context).unfocus();
         print("called");
-        Navigator.of(_scaffoldKey.currentContext).pushReplacement(SlideRightRoute(page: MapPage()));
-      }
-      else if (state == PhoneAuthState.newUser) {
+        Navigator.of(_scaffoldKey.currentContext)
+            .pushReplacement(MaterialPageRoute(builder: (_){
+              return MapPage(key: _globalKey,);
+        }));
+      } else if (state == PhoneAuthState.newUser) {
+        /*
         print(state);
-        Navigator.of(_scaffoldKey.currentContext).pushReplacement(SlideRightRoute(page: MapPage()));
-      }
-      else{
-       /* _displaySnackBar(context, "Login failed!  Try again later ");
+        Navigator.of(_scaffoldKey.currentContext)
+            .pushReplacement(SlideRightRoute(
+                page: MapPage(
+          key: _globalKey,
+        )));
+         */
+      } else {
+        /* _displaySnackBar(context, "Login failed!  Try again later ");
         Future.delayed(Duration(seconds: 8),(){
           Navigator.of(_scaffoldKey.currentContext).pushReplacementNamed(HomePage.routeName);
         }) ;
