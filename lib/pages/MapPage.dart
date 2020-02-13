@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/Provider/Dataclass.dart';
@@ -16,6 +18,7 @@ class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<MapProvider>(context);
+
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,

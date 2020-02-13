@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:foodie/Provider/LoginProvider.dart';
 import 'package:foodie/components/Button.dart';
+import 'package:foodie/components/ProfileCard.dart';
 import 'package:foodie/components/RouteAnimation.dart';
+import 'package:foodie/pages/AccountPage.dart';
 import 'package:foodie/pages/MapPage.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
@@ -87,7 +89,7 @@ class _OtpPageState extends State<OtpPage> {
         print("called");
         Navigator.of(_scaffoldKey.currentContext)
             .pushReplacement(MaterialPageRoute(builder: (_){
-              return MapPage(key: _globalKey,);
+              return AccountPage();
         }));
       } else if (state == PhoneAuthState.newUser) {
         /*
