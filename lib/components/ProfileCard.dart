@@ -28,6 +28,7 @@ class ProfileCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text("Mobile Number",style: TextStyle(fontSize: 10,color: Colors.grey),),
+              SizedBox(height: 4,),
               Text(
                 "+91 944 244 9431",
                 style: TextStyle(

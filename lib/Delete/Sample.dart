@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:foodie/components/AddressWidget.dart';
 import 'package:foodie/components/FoodMenuWidget.dart';
 import 'package:foodie/components/ItemTile.dart';
+import 'package:foodie/components/SubscriptionTile.dart';
 
 class Sample extends StatelessWidget {
   @override
@@ -16,13 +18,44 @@ class Sample extends StatelessWidget {
 class SampleAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    List<String> list = ["Subscriptions","Address Book","Support","Logout"];
     return Container(
       child: ListView.builder(
-          itemCount: 5,
+          itemCount: 4,
           itemBuilder: (context, i) {
-            return ItemTile();
+            return ItemTile(text:list[i] ,);
           }),
     );
   }
 }
+
+class SampleSubscription extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    List<String> list = ["Subscriptions","Address Book","Support","Logout"];
+    return Container(
+      child: ListView.builder(
+          itemCount: 4,
+          itemBuilder: (context, i) {
+            return SubscriptionTile();
+          }),
+    );
+  }
+}
+
+class SampleAddress extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    List<String> list = ["Subscriptions","Address Book","Support","Logout"];
+    return Container(
+      child: ListView.builder(
+          itemCount: 4,
+          itemBuilder: (context, i) {
+            return AddressWidget();
+          }),
+    );
+  }
+}
+
+
 

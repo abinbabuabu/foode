@@ -1,15 +1,47 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ItemTile extends StatelessWidget{
+class ItemTile extends StatelessWidget {
+  final String text;
+
+  ItemTile({@required this.text});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      color: Colors.black,
-      child: Row(children: <Widget>[
-        Text("Sample"),Icon(Icons.navigate_next)
-      ],),
+      decoration: BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.grey, width: 2))),
+      height: 60,
+      margin: EdgeInsets.only(left: 18.0, right: 18.0),
+      child: Material(
+        child: InkWell(
+          onTap: (){},
+          child: Container(
+            padding: EdgeInsets.only(left: 6.0,right: 6.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Icon(Icons.person),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      text,
+                      style: TextStyle(color: Colors.black54),
+                    ),
+                  ],
+                ),
+                Icon(
+                  Icons.navigate_next,
+                  color: Colors.black54,
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

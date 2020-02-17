@@ -16,37 +16,41 @@ class AccountPage extends StatelessWidget {
     });
      */
     return Scaffold(
-      backgroundColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
         body: SafeArea(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            color: Color(0xFF6C3106),
             child: Stack(children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(bottom: 30),
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
-                color: Color(0xFF6C3106),
-                child: ProfileCard(),
-              ),
+              Positioned(top: 0, left: 0, right: 0, child: ProfileCard()),
               Positioned(
                   left: 0,
                   right: 0,
                   top: 100,
                   bottom: 0,
                   child: Container(
-                      child: Sample(),
+                      child: SampleAccount(),
                       padding: EdgeInsets.only(top: 20),
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
+                      width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                        color: Colors.grey,
+                        color: Colors.white,
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(24.0),
                           topLeft: Radius.circular(24.0),
-                        ),)
-                  )),
-            ])));
+                        ),
+                      ))),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 10,
+                child: Center(
+                    child: Text(
+                  "Designed & Developed by Emilda",
+                  style: TextStyle(color: Colors.grey, fontSize: 7),
+                )),
+              )
+            ]),
+          ),
+        ));
   }
 }
