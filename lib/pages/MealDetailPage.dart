@@ -1,14 +1,30 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_image/network.dart';
+import 'package:foodie/Provider/Dataclass.dart';
 import 'package:foodie/components/Divider.dart';
 import 'package:foodie/components/FoodListItem.dart';
 import 'package:foodie/components/PlanButtonWidget.dart';
+import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/components/TextUndelineWidget.dart';
+import 'package:foodie/pages/RazorPayPage.dart';
 
 class MealDetailPage extends StatelessWidget {
+  final LunchData data;
+
+  MealDetailPage({@required this.data});
+
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark));
+
     double height = MediaQuery.of(context).size.height;
     double _topHeight = height / 4;
     double _bottomHeight = height - _topHeight - 24;
@@ -21,9 +37,11 @@ class MealDetailPage extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  Container(
-                    color: Colors.grey,
+                  Image(
+                    image: NetworkImageWithRetry(data.coverImgUrl),
                     height: _topHeight,
+                    fit: BoxFit.fill,
+                    width: double.infinity,
                   ),
                   Container(
                     padding: EdgeInsets.all(10.0),
@@ -32,7 +50,7 @@ class MealDetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(
-                          height: _topHeight / 2+20,
+                          height: _topHeight / 2 + 20,
                         ),
                         TextUnderlineWidget(
                           text: "View Plan",
@@ -54,29 +72,118 @@ class MealDetailPage extends StatelessWidget {
                           padding: const EdgeInsets.only(
                               left: 16, right: 16, top: 8),
                           child: Text(
-                            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd",
+                            data.homeDesc,
                             style: TextStyle(fontSize: 10, color: Colors.grey),
                             maxLines: 6,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.only(top: 16.0),
                           child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.grey,
-                                borderRadius: BorderRadius.circular(12)),
-                            height: 138,
+                            height: 152,
+                            width: double.infinity,
+                            child: CarouselSlider(
+                                autoPlay: true,
+                                enlargeCenterPage: true,
+                                aspectRatio: 16 / 9,
+                                viewportFraction: 0.8,
+                                pauseAutoPlayOnTouch: Duration(seconds: 1),
+                                enableInfiniteScroll: true,
+                                items: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, right: 8.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      child: Image(
+                                        image: NetworkImageWithRetry(
+                                            data.dis1ImgUrl),
+                                        height: _topHeight,
+                                        fit: BoxFit.fill,
+                                        width: double.infinity,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, right: 8.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      child: Image(
+                                        image: NetworkImageWithRetry(
+                                            data.dis2ImgUrl),
+                                        height: _topHeight,
+                                        fit: BoxFit.fill,
+                                        width: double.infinity,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, right: 8.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      child: Image(
+                                        image: NetworkImageWithRetry(
+                                            data.dis3ImgUrl),
+                                        height: _topHeight,
+                                        fit: BoxFit.fill,
+                                        width: double.infinity,
+                                      ),
+                                    ),
+                                  )
+                                ]),
                           ),
                         ),
                         SizedBox(
                           height: 40,
                         ),
-                        TextUnderlineWidget(text: "Choose the plan",),
-                        SizedBox(height: 26,),
-                        PlanButtonWidget(days: "3",price: "180",),
-                        PlanButtonWidget(days: "7",price: "320",),
-                        PlanButtonWidget(days: "30",price: "570",)
+                        TextUnderlineWidget(
+                          text: "Choose the plan",
+                        ),
+                        SizedBox(
+                          height: 26,
+                        ),
+                        PlanButtonWidget(
+                          days: "3",
+                          price: data.threeDayCost.toString(),
+                          listener: () {
+                            var pay = PaymentData(
+                                desc: data.displayName,
+                                amount: data.threeDayCost);
+                            Navigator.of(context).push(FadeRoute(
+                                page: RazorpayPage(
+                                  paymentData: pay,
+                                )));
+                          },
+                        ),
+                        PlanButtonWidget(
+                          days: "7",
+                          price: data.sevenDayCost.toString(),
+                          listener: () {
+                            var pay = PaymentData(
+                                desc: data.displayName,
+                                amount: data.sevenDayCost);
+                            Navigator.of(context).push(FadeRoute(
+                                page: RazorpayPage(
+                                  paymentData: pay,
+                                )));
+                          },
+                        ),
+                        PlanButtonWidget(
+                          days: "30",
+                          price: data.thirtyDayCost.toString(),
+                          listener: () {
+                            var pay = PaymentData(
+                                desc: data.displayName,
+                                amount: data.thirtyDayCost);
+                            Navigator.of(context).push(FadeRoute(
+                                page: RazorpayPage(
+                              paymentData: pay,
+                            )));
+                          },
+                        )
                       ],
                     ),
                   )
@@ -92,6 +199,8 @@ class MealDetailPage extends StatelessWidget {
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.only(left: 24, right: 24),
+                        width: double.infinity,
+                        height: 140,
                         child: Card(
                           elevation: 8,
                           shape: RoundedRectangleBorder(
@@ -103,7 +212,7 @@ class MealDetailPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  "Sublime North & South Indian Non Veg Mini Meal Plan",
+                                  data.displayName,
                                   style: TextStyle(
                                       fontFamily: "MontserratBB", fontSize: 15),
                                 ),
@@ -119,7 +228,7 @@ class MealDetailPage extends StatelessWidget {
                                   height: 4,
                                 ),
                                 Text(
-                                  "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd",
+                                  data.briefDesc,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontSize: 11, color: Colors.grey),

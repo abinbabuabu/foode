@@ -2,10 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:foodie/Delete/Sample.dart';
+import 'package:foodie/Provider/FirebaseProvider.dart';
+import 'package:provider/provider.dart';
 
-class DetailsPage extends StatelessWidget {
+class DetailsPage extends StatefulWidget {
+  @override
+  _DetailsPageState createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
+    print("build called");
+    var provider = Provider.of<FirebaseProvider>(context);
+    provider.retrieveLunch();
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Color(0xFF6C3106),
       statusBarIconBrightness: Brightness.light,

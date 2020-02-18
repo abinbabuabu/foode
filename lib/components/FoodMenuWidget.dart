@@ -1,57 +1,84 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_image/network.dart';
+import 'package:foodie/Provider/Dataclass.dart';
 import 'package:foodie/components/ChefAddressMinimal.dart';
 import 'package:foodie/components/Divider.dart';
 import 'package:foodie/components/PriceWidget.dart';
+import 'package:foodie/components/RouteAnimation.dart';
+import 'package:foodie/pages/MealDetailPage.dart';
 
 class FoodMenuWidget extends StatelessWidget {
+  final LunchData data;
+
+  FoodMenuWidget({@required this.data});
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(side:BorderSide(color: Colors.black,width: 0.2),borderRadius: BorderRadius.circular(12),),
-      clipBehavior: Clip.hardEdge,
-      margin: EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            color: Colors.grey,
-            height: 144,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              "Sublime North & South Indian Non Veg Mini Meal Plan",
-              style: TextStyle(fontFamily: "MontserratBB"),
+    return GestureDetector(
+      onTap: (){
+        Navigator.of(context).push(FadeRoute(page: MealDetailPage(data: data,)));
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.black, width: 0.2),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        clipBehavior: Clip.hardEdge,
+        margin: EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Image(
+              image: NetworkImageWithRetry(data.coverImgUrl),
+              height: 144,
+              fit: BoxFit.fill,
+              width: double.infinity,
             ),
-          ),
-          ChefAddressMinimal(
-            chefName: "Homely - Sai Nagar",
-            chefAddress: "Freshly made, homestyle meals delivered with love",
-          ),
-          SizedBox(
-            height: 18,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              PriceWidget(
-                days: "3",
-                price: "89",
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                data.displayName,
+                style: TextStyle(fontFamily: "MontserratBB"),
               ),
-              mDivider(color: 0xFF707070,height: 36,width: 2,),
-              PriceWidget(
-                days: "7",
-                price: "99",
-              ),
-              mDivider(color: 0xFF707070,height: 36,width: 2,),
-              PriceWidget(
-                days: "30",
-                price: "102",
-              )
-            ],
-          )
-        ],
+            ),
+            ChefAddressMinimal(
+              chefName: "Homely - Sai Nagar",
+              chefAddress: data.homeDesc,
+            ),
+            SizedBox(
+              height: 18,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                PriceWidget(
+                  days: "3",
+                  price: data.threeDayCost.toString(),
+                ),
+                mDivider(
+                  color: 0xFF707070,
+                  height: 36,
+                  width: 2,
+                ),
+                PriceWidget(
+                  days: "7",
+                  price: data.sevenDayCost.toString(),
+                ),
+                mDivider(
+                  color: 0xFF707070,
+                  height: 36,
+                  width: 2,
+                ),
+                PriceWidget(
+                  days: "30",
+                  price: data.thirtyDayCost.toString(),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

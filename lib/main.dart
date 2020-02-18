@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:foodie/Provider/FirebaseProvider.dart';
 import 'package:foodie/Provider/MapProvider.dart';
 import 'package:foodie/Provider/PlacesProvider.dart';
 import 'package:foodie/pages/AccountPage.dart';
 import 'package:foodie/pages/AddressBookPage.dart';
+import 'package:foodie/pages/DetailsPage.dart';
 import 'package:foodie/pages/LoginPage.dart';
 import 'package:foodie/pages/MealDetailPage.dart';
 import 'package:foodie/pages/Splash.dart';
@@ -29,22 +31,24 @@ class MyApp extends StatelessWidget {
           create: (_) => PlacesProvider.instance(),
         ),
         ChangeNotifierProvider<MapProvider>(
-          create: (_)=> MapProvider(),
+          create: (_) => MapProvider(),
+        ),
+        ChangeNotifierProvider<FirebaseProvider>(
+          create: (_) => FirebaseProvider.instantiate(),
         )
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          textTheme: TextTheme(display1: TextStyle(color:Color(0xFF7B4E06) )),
-          primaryColor: Color(0xFFB98105),
-          accentColor: Color(0xFFFFF500),
-          canvasColor: Colors.white,
-          bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.transparent),
-          fontFamily: "Montseratt"
-        ),
-        home:AddressBookPage()
-      ),
+          title: 'Flutter Demo',
+          theme: ThemeData(
+              textTheme:
+                  TextTheme(display1: TextStyle(color: Color(0xFF7B4E06))),
+              primaryColor: Color(0xFFB98105),
+              accentColor: Color(0xFFFFF500),
+              canvasColor: Colors.white,
+              bottomSheetTheme:
+                  BottomSheetThemeData(backgroundColor: Colors.transparent),
+              fontFamily: "Montseratt"),
+          home: AddressBookPage()),
     );
   }
 }
-

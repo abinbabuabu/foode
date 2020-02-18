@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/Delete/Sample.dart';
+import 'package:foodie/components/Button.dart';
+import 'package:foodie/components/RouteAnimation.dart';
+import 'package:foodie/pages/MapPage.dart';
 
-class AddressBookPage extends StatelessWidget{
+class AddressBookPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +24,10 @@ class AddressBookPage extends StatelessWidget{
               ))),
       body: SafeArea(
           child: Container(
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               color: Color(0xFF6C3106),
               child: Stack(children: <Widget>[
                 Positioned(
@@ -30,9 +36,34 @@ class AddressBookPage extends StatelessWidget{
                     top: 4,
                     bottom: 0,
                     child: Container(
-                        child: SampleAddress(),
+                        child: Stack(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 64),
+                              child: SampleAddress(),
+                            ),
+                            Positioned(
+                              left: 0,
+                              bottom: 0,
+                              right: 0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: AccentButton(
+                                  text: "Add Location",
+                                  listener: () {
+                                    Navigator.pushReplacement(context,
+                                        SlideUpRoute(page: MapPage()));
+                                  },
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                         padding: EdgeInsets.only(top: 20),
-                        width: MediaQuery.of(context).size.width,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(

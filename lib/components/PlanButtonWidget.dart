@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/components/Button.dart';
+import 'package:foodie/components/Listeners.dart';
 
 class PlanButtonWidget extends StatelessWidget {
   final String days;
   final String price;
+  final ButtonClick listener;
   // Listener Required
 
-  PlanButtonWidget({@required this.days, @required this.price});
+  PlanButtonWidget({@required this.days, @required this.price,@required this.listener});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,9 @@ class PlanButtonWidget extends StatelessWidget {
           Expanded(
               flex: 1,
               child: GreenButton(
-                listener: () {},
+                listener: () {
+                  listener();
+                },
               ))
         ],
       ),
