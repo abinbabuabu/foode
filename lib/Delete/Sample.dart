@@ -5,10 +5,12 @@ import 'package:foodie/Provider/FirebaseProvider.dart';
 import 'package:foodie/components/AddressWidget.dart';
 import 'package:foodie/components/FoodMenuWidget.dart';
 import 'package:foodie/components/ItemTile.dart';
+import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/components/SubscriptionTile.dart';
+import 'package:foodie/pages/AddressBookPage.dart';
 import 'package:provider/provider.dart';
 
-class Sample extends StatelessWidget {
+class SampleLunch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<FirebaseProvider>(context);
@@ -20,7 +22,57 @@ class Sample extends StatelessWidget {
               itemCount: list.data.length,
               itemBuilder: (context, i) {
                 LunchData lunchData = list.data[i];
-                return FoodMenuWidget(data: lunchData,);
+                return FoodMenuWidget(
+                  data: lunchData,
+                );
+              });
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+}
+
+class SampleBreakFast extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var provider = Provider.of<FirebaseProvider>(context);
+    return FutureBuilder(
+      future: provider.retrieveBreakFast(),
+      builder: (context, list) {
+        if (list.hasData) {
+          return ListView.builder(
+              itemCount: list.data.length,
+              itemBuilder: (context, i) {
+                BreakFastData breakFastData = list.data[i];
+                return FoodMenuWidget(
+                  data: breakFastData,
+                );
+              });
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+}
+
+class SampleDinner extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var provider = Provider.of<FirebaseProvider>(context);
+    return FutureBuilder(
+      future: provider.retrieveDinner(),
+      builder: (context, list) {
+        if (list.hasData) {
+          return ListView.builder(
+              itemCount: list.data.length,
+              itemBuilder: (context, i) {
+                DinnerData dinnerDataData = list.data[i];
+                return FoodMenuWidget(
+                  data: dinnerDataData,
+                );
               });
         } else {
           return Center(child: CircularProgressIndicator());
@@ -40,6 +92,15 @@ class SampleAccount extends StatelessWidget {
           itemBuilder: (context, i) {
             return ItemTile(
               text: list[i],
+              listener: () {
+                switch (i) {
+                  case 1:
+                    {
+                      Navigator.push(
+                          context, FadeRoute(page: AddressBookPage()));
+                    }
+                }
+              },
             );
           }),
     );

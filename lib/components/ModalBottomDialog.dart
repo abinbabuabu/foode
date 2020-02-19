@@ -88,7 +88,9 @@ class _ModalBottomDialogState extends State<ModalBottomDialog> {
                         buildingName: buildingName,
                         locationName: locationName,
                         streetName: streetName);
-                    provider.addAddress(addressData);
+                    provider.tempAddress = addressData;
+                    provider.isAddressAdded = true;
+                    Navigator.of(context).pop(true);
                   }
                 },
                 text: "Add Address",

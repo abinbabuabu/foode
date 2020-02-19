@@ -11,6 +11,7 @@ import 'package:foodie/components/PlanButtonWidget.dart';
 import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/components/TextUndelineWidget.dart';
 import 'package:foodie/pages/RazorPayPage.dart';
+import 'package:foodie/pages/SubscriptionPage.dart';
 
 class MealDetailPage extends StatelessWidget {
   final LunchData data;
@@ -149,13 +150,7 @@ class MealDetailPage extends StatelessWidget {
                           days: "3",
                           price: data.threeDayCost.toString(),
                           listener: () {
-                            var pay = PaymentData(
-                                desc: data.displayName,
-                                amount: data.threeDayCost);
-                            Navigator.of(context).push(FadeRoute(
-                                page: RazorpayPage(
-                                  paymentData: pay,
-                                )));
+                            Navigator.of(context).push(FadeRoute(page: SubscriptionPage()));
                           },
                         ),
                         PlanButtonWidget(

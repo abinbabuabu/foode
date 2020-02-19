@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie/Provider/FirebaseProvider.dart';
 import 'package:foodie/pages/AccountPage.dart';
 import 'package:foodie/pages/DetailsPage.dart';
 import 'package:foodie/pages/SubscriptionDetailsPage.dart';
+import 'package:provider/provider.dart';
 
 class TabPage extends StatefulWidget {
   @override
@@ -23,7 +25,13 @@ class _TabPageState extends State<TabPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Provider.of<FirebaseProvider>(context).getAddresses();
     return Scaffold(
       body: SafeArea(
         child: _children[_currentIndex],

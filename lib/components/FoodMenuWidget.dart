@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_image/network.dart';
-import 'package:foodie/Provider/Dataclass.dart';
 import 'package:foodie/components/ChefAddressMinimal.dart';
 import 'package:foodie/components/Divider.dart';
 import 'package:foodie/components/PriceWidget.dart';
@@ -10,15 +9,18 @@ import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/pages/MealDetailPage.dart';
 
 class FoodMenuWidget extends StatelessWidget {
-  final LunchData data;
+  var data;
 
   FoodMenuWidget({@required this.data});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.of(context).push(FadeRoute(page: MealDetailPage(data: data,)));
+      onTap: () {
+        Navigator.of(context).push(FadeRoute(
+            page: MealDetailPage(
+          data: data,
+        )));
       },
       child: Card(
         shape: RoundedRectangleBorder(

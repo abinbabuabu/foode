@@ -5,15 +5,13 @@ import 'package:foodie/Provider/Dataclass.dart';
 
 class FirebaseProvider extends ChangeNotifier {
   DatabaseReference _firebase;
+  AddressData tempAddress;
+  bool isAddressAdded;
   FirebaseUser _user;
+  List<AddressData> addressList;
 
   FirebaseProvider.instantiate() {
     _firebase = FirebaseDatabase.instance.reference();
-    _getUser();
-  }
-
-  _getUser() async {
-    _user = await FirebaseAuth.instance.currentUser();
   }
 
   Future<List<LunchData>> retrieveLunch() async {
@@ -28,16 +26,16 @@ class FirebaseProvider extends ChangeNotifier {
     return lunchList;
   }
 
-  Future<List<LunchData>> retrieveBreakFast() async {
-    List<LunchData> lunchList = List();
+  Future<List<BreakFastData>> retrieveBreakFast() async {
+    List<BreakFastData> breakFastList = List();
     var data = await _firebase.child("breakfast").once().catchError((error) {});
     Map<dynamic, dynamic> _resultMap = data.value;
 
     _resultMap.forEach((key, value) {
-      LunchData lunchData = LunchData.fromSnap(value);
-      lunchList.add(lunchData);
+      BreakFastData breakFastData = BreakFastData.fromSnap(value);
+      breakFastList.add(breakFastData);
     });
-    return lunchList;
+    return breakFastList;
   }
 
   Future<List<LunchData>> retrieveDinner() async {
@@ -53,8 +51,10 @@ class FirebaseProvider extends ChangeNotifier {
   }
 
   Future<bool> addAddress(AddressData addressData) async {
+    _user = await FirebaseAuth.instance.currentUser();
     bool result = await _firebase
         .child("AppData")
+        .child(_user.uid)
         .child("Address")
         .push()
         .set(<String, String>{
@@ -68,5 +68,21 @@ class FirebaseProvider extends ChangeNotifier {
       return false;
     });
     return result;
+  }
+
+  Future<void> getAddresses() async {
+    addressList = List();
+    _user = await FirebaseAuth.instance.currentUser();
+    var data = await _firebase
+        .child("AppData")
+        .child(_user.uid)
+        .child("Address")
+        .once()
+        .catchError((error) {});
+    Map<dynamic, dynamic> _resultMap = data.value;
+    _resultMap.forEach((key, value) {
+      AddressData addressData = AddressData.fromSnap(value);
+      addressList.add(addressData);
+    });
   }
 }

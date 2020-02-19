@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'Listeners.dart';
+
 class ItemTile extends StatelessWidget {
   final String text;
+  final ButtonClick listener;
 
-  ItemTile({@required this.text});
+  ItemTile({@required this.text,@required this.listener});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,9 @@ class ItemTile extends StatelessWidget {
       margin: EdgeInsets.only(left: 18.0, right: 18.0),
       child: Material(
         child: InkWell(
-          onTap: (){},
+          onTap: (){
+            listener();
+          },
           child: Container(
             padding: EdgeInsets.only(left: 6.0,right: 6.0),
             child: Row(

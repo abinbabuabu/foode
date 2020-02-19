@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/Provider/Dataclass.dart';
+import 'package:foodie/Provider/FirebaseProvider.dart';
 import 'package:foodie/Provider/MapProvider.dart';
 import 'package:foodie/components/Button.dart';
 import 'package:foodie/components/ModalBottomDialog.dart';
@@ -18,6 +18,9 @@ class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<MapProvider>(context);
+    var dbProvider = Provider.of<FirebaseProvider>(context);
+
+    //TODO("Google Map Error. Fix It by Updating the Flutter Package from Another Repo")
 
 
     return Scaffold(
@@ -80,7 +83,7 @@ class MapPage extends StatelessWidget {
               ),
               AccentButton(
                 listener: () {
-                  showModalBottomSheet(
+                  var result = showModalBottomSheet(
                       isScrollControlled: true,
                       context: context,
                       builder: (BuildContext context) {
@@ -99,6 +102,17 @@ class MapPage extends StatelessWidget {
                           child: ModalBottomDialog(),
                         );
                       });
+                  result.then((value){
+                    if(value == true && dbProvider.isAddressAdded == true){
+                      dbProvider.addAddress(dbProvider.tempAddress).then((val){
+                        if(val){
+                          print("address Added");
+                        }
+                        else
+                          print("Failed");
+                      });
+                    }
+                  });
                 },
                 text: "Add Location",
               ),

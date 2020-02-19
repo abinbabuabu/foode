@@ -6,7 +6,9 @@ import 'package:foodie/components/Button.dart';
 import 'package:foodie/components/ProfileCard.dart';
 import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/pages/AccountPage.dart';
+import 'package:foodie/pages/DetailsPage.dart';
 import 'package:foodie/pages/MapPage.dart';
+import 'package:foodie/pages/TabPage.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
 class OtpPage extends StatefulWidget {
@@ -89,7 +91,7 @@ class _OtpPageState extends State<OtpPage> {
         print("called");
         Navigator.of(_scaffoldKey.currentContext)
             .pushReplacement(MaterialPageRoute(builder: (_){
-              return AccountPage();
+              return TabPage();
         }));
       } else if (state == PhoneAuthState.newUser) {
         /*

@@ -62,7 +62,7 @@ class LunchData {
 }
 
 class BreakFastData {
-  String lunchPlannerId;
+  String breakfastPlannerId;
   String briefDesc;
   String displayName;
   String homeDesc;
@@ -77,7 +77,40 @@ class BreakFastData {
   int thirtyDayCost;
 
   BreakFastData.fromSnap(Map<dynamic, dynamic> map){
-    lunchPlannerId = map["breakfastPlannerId"].toString();
+    breakfastPlannerId = map["breakfastPlannerId"].toString();
+    briefDesc = map["displayInfo"]["BriefDescription"].toString();
+    displayName = map["displayInfo"]["DisplayName"].toString();
+    homeDesc = map["displayInfo"]["HomeDescription"];
+    priority = map["displayInfo"]["priority"];
+    chefImgUrl = map["images"]["chefImg"];
+    coverImgUrl = map["images"]["coverImg"];
+    dis1ImgUrl = map["images"]["displayImg1"];
+    dis2ImgUrl = map["images"]["displayImg2"];
+    dis3ImgUrl = map["images"]["displayImg3"];
+
+    sevenDayCost = map["price"]["sevendayCost"];
+    threeDayCost = map["price"]["threedayCost"];
+    thirtyDayCost = map["price"]["thirtydayCost"];
+  }
+}
+
+class DinnerData {
+  String dinnerPlannerId;
+  String briefDesc;
+  String displayName;
+  String homeDesc;
+  int priority;
+  String chefImgUrl;
+  String coverImgUrl;
+  String dis1ImgUrl;
+  String dis2ImgUrl;
+  String dis3ImgUrl;
+  int threeDayCost;
+  int sevenDayCost;
+  int thirtyDayCost;
+
+  DinnerData.fromSnap(Map<dynamic, dynamic> map){
+    dinnerPlannerId = map["dinnerPlannerId"].toString();
     briefDesc = map["displayInfo"]["BriefDescription"].toString();
     displayName = map["displayInfo"]["DisplayName"].toString();
     homeDesc = map["displayInfo"]["HomeDescription"];
@@ -104,6 +137,13 @@ class AddressData {
   AddressData({@required this.locationName, @required this.buildingName,
     @required this.streetName, this.landMark});
 
+  AddressData.fromSnap(Map<dynamic,dynamic>map){
+    locationName = map["locationName"];
+    buildingName = map["buildingName"];
+    streetName = map["streetName"];
+    landMark = map["landMark"];
+  }
+
 }
 
 class PaymentData {
@@ -111,4 +151,29 @@ class PaymentData {
   String desc;
 
   PaymentData({@required this.amount, @required this.desc,});
+}
+
+
+
+/*
+userid
+payid
+amount
+address
+startdate
+days
+weekend
+chefid
+mealType
+*/
+
+class OrderData{
+  String userId;
+  String paymentId;
+  int amount;
+  String address;
+  DateTime startDate;
+  int noOfDays;
+  bool onWeekend;
+  String chefId;
 }
