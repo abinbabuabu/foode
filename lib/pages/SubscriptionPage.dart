@@ -1,4 +1,4 @@
-import 'package:date_picker_timeline/date_picker_timeline.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/Provider/Dataclass.dart';
@@ -6,6 +6,7 @@ import 'package:foodie/Provider/FirebaseProvider.dart';
 import 'package:foodie/components/BillWidget.dart';
 import 'package:foodie/components/Button.dart';
 import 'package:foodie/components/TextUndelineWidget.dart';
+import 'package:foodie/components/date_picker_timeline.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionPage extends StatefulWidget {
@@ -22,16 +23,19 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   List<AddressData> addressList;
   AddressData currentAddress;
   bool onWeekEnds = false;
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime.now().add(Duration(days: 1));
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   var radioValue = 0;
 
   @override
   Widget build(BuildContext context) {
+    //selectedDate = selectedDate.add(Duration(days: 1));
     var provider = Provider.of<FirebaseProvider>(context, listen: false);
     addressList = provider.addressList;
     currentAddress = addressList[0];
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: new IconButton(
@@ -112,11 +116,13 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   child: RaisedButton(
                     color: Theme.of(context).accentColor,
                     onPressed: () {
-                      provider.getUuid().then((uuid) {
-                        makeOrdersData(uuid).then((value) {
-                          provider.postOrder(value);
+                      if(checkForSatSun()) {
+                        provider.getUuid().then((uuid) {
+                          makeOrdersData(uuid).then((value) {
+                            provider.postOrder(value);
+                          });
                         });
-                      });
+                      }
                     },
                     child: Text(
                       "Proceed to Pay",
@@ -141,6 +147,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     });
 
     currentAddress = addressList[T];
+
   }
 
   Future<OrderData> makeOrdersData(String uuid) async {
@@ -198,4 +205,16 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         weekEnds: onWeekEnds.toString());
     return order;
   }
+
+  bool checkForSatSun(){
+    if(!onWeekEnds){
+      if(selectedDate.weekday == 6 || selectedDate.weekday == 7){
+        var snack = SnackBar(content: Text("Please tick the Check Box to Place Order on Sat / Sun"),);
+        scaffoldKey.currentState.showSnackBar(snack);
+        return false;
+      }
+    }
+    return true;
+  }
+
 }

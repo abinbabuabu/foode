@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image/network.dart';
+import 'package:foodie/Delete/Sample.dart';
 import 'package:foodie/Provider/Dataclass.dart';
 import 'package:foodie/Provider/FirebaseProvider.dart';
 import 'package:foodie/components/Divider.dart';
@@ -61,12 +62,7 @@ class MealDetailPage extends StatelessWidget {
                         Container(
                           height: 200,
                           width: double.infinity,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 5,
-                              itemBuilder: (context, i) {
-                                return FoodListItem();
-                              }),
+                          child: SamplePlanner(plannerId:getPlannerId(data),)
                         ),
                         TextUnderlineWidget(
                           text: "Homely - Sai Nagar",
@@ -234,5 +230,11 @@ class MealDetailPage extends StatelessWidget {
         ),
       ),
     );
+  }
+  String getPlannerId(MealData data){
+    int selected = data.selected;
+    if(selected ==0) return data.breakfastPlannerId;
+    else if(selected == 1) return data.lunchPlannerId;
+    else return data.dinnerPlannerId;
   }
 }

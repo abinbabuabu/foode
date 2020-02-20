@@ -102,4 +102,17 @@ class FirebaseProvider extends ChangeNotifier {
     var response = await http.post(url, body: mjson, headers: headers);
     print(response.body);
   }
+
+
+  Future<List<PlannerData>> getPlannerDetails(String plannerId) async{
+    List<PlannerData> plannerList = List();
+    var data = await _firebase.child("plannerId").child(plannerId).once().catchError((error) {});
+    Map<dynamic, dynamic> _resultMap = data.value;
+    _resultMap.forEach((key, value) {
+      PlannerData plannerData = PlannerData.fromSnap(value);
+      plannerList.add(plannerData);
+    });
+    return plannerList;
+  }
+
 }

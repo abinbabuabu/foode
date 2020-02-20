@@ -187,3 +187,22 @@ class OrderData {
         'chefId': chefId
       };
 }
+
+
+class PlannerData{
+  String details;
+  String img;
+  String date;
+  String name;
+  String key;
+  String type;
+
+  PlannerData.fromSnap(Map<dynamic, dynamic> map){
+    details = map["details"];
+    img = map["img"];
+    date = map["key"];
+    name = map["name"];
+    key = map["pushKey"];
+    type = map["type"];
+  }
+}

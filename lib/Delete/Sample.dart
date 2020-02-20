@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:foodie/Provider/Dataclass.dart';
 import 'package:foodie/Provider/FirebaseProvider.dart';
 import 'package:foodie/components/AddressWidget.dart';
+import 'package:foodie/components/FoodListItem.dart';
 import 'package:foodie/components/FoodMenuWidget.dart';
 import 'package:foodie/components/ItemTile.dart';
 import 'package:foodie/components/RouteAnimation.dart';
@@ -131,6 +132,35 @@ class SampleAddress extends StatelessWidget {
           itemBuilder: (context, i) {
             return AddressWidget();
           }),
+    );
+  }
+}
+
+
+class SamplePlanner extends StatelessWidget {
+  final String plannerId;
+
+  SamplePlanner({@required this.plannerId});
+
+  @override
+  Widget build(BuildContext context) {
+    var provider = Provider.of<FirebaseProvider>(context);
+    return FutureBuilder(
+      future: provider.getPlannerDetails(plannerId),
+      builder: (context, list) {
+        if (list.hasData) {
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+              itemCount: list.data.length,
+              itemBuilder: (context, i) {
+                PlannerData plannerData = list.data[i];
+                print(plannerData.details);
+                return FoodListItem();
+              });
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }
