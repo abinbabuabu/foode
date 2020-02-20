@@ -5,6 +5,8 @@ import 'package:foodie/Provider/MapProvider.dart';
 import 'package:foodie/Provider/PlacesProvider.dart';
 import 'package:foodie/pages/DetailsPage.dart';
 import 'package:foodie/pages/LoginPage.dart';
+import 'package:foodie/pages/SubscriptionDetailsPage.dart';
+import 'package:foodie/pages/SubscriptionPage.dart';
 import 'package:foodie/pages/TabPage.dart';
 import 'package:provider/provider.dart';
 
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
               bottomSheetTheme:
                   BottomSheetThemeData(backgroundColor: Colors.transparent),
               fontFamily: "Montseratt"),
-          home: TabPage()),
+          home:TabPage()),
     );
   }
 }

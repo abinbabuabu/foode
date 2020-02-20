@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image/network.dart';
 import 'package:foodie/Provider/Dataclass.dart';
+import 'package:foodie/Provider/FirebaseProvider.dart';
 import 'package:foodie/components/Divider.dart';
 import 'package:foodie/components/FoodListItem.dart';
 import 'package:foodie/components/PlanButtonWidget.dart';
@@ -12,11 +13,13 @@ import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/components/TextUndelineWidget.dart';
 import 'package:foodie/pages/RazorPayPage.dart';
 import 'package:foodie/pages/SubscriptionPage.dart';
+import 'package:provider/provider.dart';
 
 class MealDetailPage extends StatelessWidget {
-  final LunchData data;
+  var  data;
+  final int selected;
 
-  MealDetailPage({@required this.data});
+  MealDetailPage({@required this.data, @required this.selected});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +32,8 @@ class MealDetailPage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double _topHeight = height / 4;
     double _bottomHeight = height - _topHeight - 24;
+
+    Provider.of<FirebaseProvider>(context).selected = selected;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -150,7 +155,8 @@ class MealDetailPage extends StatelessWidget {
                           days: "3",
                           price: data.threeDayCost.toString(),
                           listener: () {
-                            Navigator.of(context).push(FadeRoute(page: SubscriptionPage()));
+                            Navigator.of(context)
+                                .push(FadeRoute(page: SubscriptionPage()));
                           },
                         ),
                         PlanButtonWidget(
@@ -162,8 +168,8 @@ class MealDetailPage extends StatelessWidget {
                                 amount: data.sevenDayCost);
                             Navigator.of(context).push(FadeRoute(
                                 page: RazorpayPage(
-                                  paymentData: pay,
-                                )));
+                              paymentData: pay,
+                            )));
                           },
                         ),
                         PlanButtonWidget(

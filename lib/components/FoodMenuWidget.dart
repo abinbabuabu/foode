@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_image/network.dart';
+import 'package:foodie/Provider/Dataclass.dart';
 import 'package:foodie/components/ChefAddressMinimal.dart';
 import 'package:foodie/components/Divider.dart';
 import 'package:foodie/components/PriceWidget.dart';
@@ -10,6 +11,7 @@ import 'package:foodie/pages/MealDetailPage.dart';
 
 class FoodMenuWidget extends StatelessWidget {
   var data;
+  int selected;
 
   FoodMenuWidget({@required this.data});
 
@@ -20,6 +22,7 @@ class FoodMenuWidget extends StatelessWidget {
         Navigator.of(context).push(FadeRoute(
             page: MealDetailPage(
           data: data,
+          selected: selected,
         )));
       },
       child: Card(

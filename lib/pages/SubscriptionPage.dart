@@ -15,8 +15,9 @@ class SubscriptionPage extends StatefulWidget {
 
 class _SubscriptionPageState extends State<SubscriptionPage> {
   List<AddressData> addressList;
-
   AddressData currentAddress;
+  bool onWeekEnds = false;
+  DateTime selectedDate = DateTime.now();
 
   var radioValue = 0;
 
@@ -26,23 +27,57 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     addressList = provider.addressList;
     currentAddress = addressList[0];
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: new IconButton(
+            icon: new Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop()),
+        elevation: 0,
+      ),
       body: SafeArea(
         child: Container(
+          margin: EdgeInsets.only(right: 8.0, left: 8.0),
           width: double.infinity,
           color: Colors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               TextUnderlineWidget(text: "Subscription Starting Date"),
-              DatePickerTimeline(DateTime.now(),
-                  dayTextStyle:
-                      TextStyle(fontFamily: "MontserratB", fontSize: 10),
-                  monthTextStyle:
-                      TextStyle(fontFamily: "MontserratB", fontSize: 8),
-                  dateTextStyle:
-                      TextStyle(fontFamily: "MontserratBB", fontSize: 25),
-                  selectionColor: Color(0xFFFFE200),
-                  onDateChange: (date) {}),
+              SizedBox(
+                height: 7,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DatePickerTimeline(selectedDate,
+                    dayTextStyle:
+                    TextStyle(fontFamily: "MontserratB", fontSize: 10),
+                    monthTextStyle:
+                    TextStyle(fontFamily: "MontserratB", fontSize: 8),
+                    dateTextStyle:
+                    TextStyle(fontFamily: "MontserratBB", fontSize: 25),
+                    selectionColor: Color(0xFFFFE200),
+                    onDateChange: (date) {
+                      selectedDate = date;
+                    }),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              Row(
+                children: <Widget>[
+                  Checkbox(
+                    checkColor: Colors.white,
+                    activeColor: Colors.green,
+                    value: onWeekEnds,
+                    onChanged: (value) {
+                      setState(() {
+                        onWeekEnds = value;
+                      });
+                    },
+                  ),
+                  Text("Delivery on Saturday and Sunday")
+                ],
+              ),
               TextUnderlineWidget(text: "Choose Address"),
               Container(
                 padding: EdgeInsets.all(8.0),
@@ -53,6 +88,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                       return Row(
                         children: <Widget>[
                           Radio(
+                            activeColor: Colors.green,
                             groupValue: radioValue,
                             value: i,
                             onChanged: addressChange,
@@ -64,9 +100,14 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               ),
               TextUnderlineWidget(text: "Total Bill"),
               BillWidget(),
-              AccentButton(
-                text: "Proceed to Pay",
-                listener: () {},
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: AccentButton(
+                  text: "Proceed to Pay",
+                  listener: () {
+                    provider.postOrder(makeOrdersData());
+                  },
+                ),
               )
             ],
           ),
@@ -83,4 +124,19 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
     currentAddress = addressList[T];
   }
+
+  OrderData makeOrdersData() {
+    var order = OrderData.make(amountPaid: "120",
+        days: "12",
+        mealType: "breakfast",
+        userId: "sample",
+        paymentId: "sample",
+        address: "sample",
+        startDate: "sample",
+        chefId: "sample",
+        weekEnds: true);
+    return order;
+  }
+
+
 }

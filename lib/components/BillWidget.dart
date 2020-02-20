@@ -14,7 +14,7 @@ class BillWidget extends StatelessWidget {
           Row(
             children: <Widget>[
               Expanded(
-                  flex: 6,
+                  flex: 5,
                   child: Text(
                     "Homely - Sai Nagar",
                     style: TextStyle(fontFamily: "MontserratB"),

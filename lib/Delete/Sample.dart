@@ -21,7 +21,7 @@ class SampleLunch extends StatelessWidget {
           return ListView.builder(
               itemCount: list.data.length,
               itemBuilder: (context, i) {
-                LunchData lunchData = list.data[i];
+                LunchData Data = list.data[i];
                 return FoodMenuWidget(
                   data: lunchData,
                 );
