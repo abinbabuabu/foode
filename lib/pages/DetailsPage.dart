@@ -89,9 +89,9 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ),
                     body: TabBarView(children: <Widget>[
-                     SampleLunch(),
+                     SampleBreakFast(),
                       SampleLunch(),
-                      SampleLunch()
+                      SampleDinner()
                     ],),
                   ), length: 3,
                 ),

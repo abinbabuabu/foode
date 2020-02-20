@@ -10,9 +10,7 @@ import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/pages/MealDetailPage.dart';
 
 class FoodMenuWidget extends StatelessWidget {
-  var data;
-  int selected;
-
+  final MealData data;
   FoodMenuWidget({@required this.data});
 
   @override
@@ -22,7 +20,6 @@ class FoodMenuWidget extends StatelessWidget {
         Navigator.of(context).push(FadeRoute(
             page: MealDetailPage(
           data: data,
-          selected: selected,
         )));
       },
       child: Card(

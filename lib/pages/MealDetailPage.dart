@@ -16,10 +16,8 @@ import 'package:foodie/pages/SubscriptionPage.dart';
 import 'package:provider/provider.dart';
 
 class MealDetailPage extends StatelessWidget {
-  var  data;
-  final int selected;
-
-  MealDetailPage({@required this.data, @required this.selected});
+  final MealData  data;
+  MealDetailPage({@required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +31,6 @@ class MealDetailPage extends StatelessWidget {
     double _topHeight = height / 4;
     double _bottomHeight = height - _topHeight - 24;
 
-    Provider.of<FirebaseProvider>(context).selected = selected;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -156,33 +153,23 @@ class MealDetailPage extends StatelessWidget {
                           price: data.threeDayCost.toString(),
                           listener: () {
                             Navigator.of(context)
-                                .push(FadeRoute(page: SubscriptionPage()));
+                                .push(FadeRoute(page: SubscriptionPage(data: data,days: 3,)));
                           },
                         ),
                         PlanButtonWidget(
                           days: "7",
                           price: data.sevenDayCost.toString(),
                           listener: () {
-                            var pay = PaymentData(
-                                desc: data.displayName,
-                                amount: data.sevenDayCost);
-                            Navigator.of(context).push(FadeRoute(
-                                page: RazorpayPage(
-                              paymentData: pay,
-                            )));
+                            Navigator.of(context)
+                                .push(FadeRoute(page: SubscriptionPage(data: data,days: 7,)));
                           },
                         ),
                         PlanButtonWidget(
                           days: "30",
                           price: data.thirtyDayCost.toString(),
                           listener: () {
-                            var pay = PaymentData(
-                                desc: data.displayName,
-                                amount: data.thirtyDayCost);
-                            Navigator.of(context).push(FadeRoute(
-                                page: RazorpayPage(
-                              paymentData: pay,
-                            )));
+                            Navigator.of(context)
+                                .push(FadeRoute(page: SubscriptionPage(data: data,days: 30,)));
                           },
                         )
                       ],

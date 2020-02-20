@@ -161,7 +161,7 @@ class OrderData {
   String startDate;
   String days;
   String mealType;
-  bool weekEnds;
+  String weekEnds;
   String chefId;
 
   OrderData.make(

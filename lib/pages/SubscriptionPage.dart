@@ -9,6 +9,11 @@ import 'package:foodie/components/TextUndelineWidget.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionPage extends StatefulWidget {
+  final MealData data;
+  final int days;
+
+  SubscriptionPage({@required this.data, this.days});
+
   @override
   _SubscriptionPageState createState() => _SubscriptionPageState();
 }
@@ -23,7 +28,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<FirebaseProvider>(context);
+    var provider = Provider.of<FirebaseProvider>(context, listen: false);
     addressList = provider.addressList;
     currentAddress = addressList[0];
     return Scaffold(
@@ -50,15 +55,14 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: DatePickerTimeline(selectedDate,
                     dayTextStyle:
-                    TextStyle(fontFamily: "MontserratB", fontSize: 10),
+                        TextStyle(fontFamily: "MontserratB", fontSize: 10),
                     monthTextStyle:
-                    TextStyle(fontFamily: "MontserratB", fontSize: 8),
+                        TextStyle(fontFamily: "MontserratB", fontSize: 8),
                     dateTextStyle:
-                    TextStyle(fontFamily: "MontserratBB", fontSize: 25),
-                    selectionColor: Color(0xFFFFE200),
-                    onDateChange: (date) {
-                      selectedDate = date;
-                    }),
+                        TextStyle(fontFamily: "MontserratBB", fontSize: 25),
+                    selectionColor: Color(0xFFFFE200), onDateChange: (date) {
+                  selectedDate = date;
+                }),
               ),
               SizedBox(
                 height: 4,
@@ -102,11 +106,25 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               BillWidget(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: AccentButton(
-                  text: "Proceed to Pay",
-                  listener: () {
-                    provider.postOrder(makeOrdersData());
-                  },
+                child: ButtonTheme(
+                  height: 43,
+                  minWidth: double.infinity,
+                  child: RaisedButton(
+                    color: Theme.of(context).accentColor,
+                    onPressed: () {
+                      provider.getUuid().then((uuid) {
+                        makeOrdersData(uuid).then((value) {
+                          provider.postOrder(value);
+                        });
+                      });
+                    },
+                    child: Text(
+                      "Proceed to Pay",
+                      style: TextStyle(color: Color(0xFF7B4E06)),
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
                 ),
               )
             ],
@@ -125,18 +143,59 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     currentAddress = addressList[T];
   }
 
-  OrderData makeOrdersData() {
-    var order = OrderData.make(amountPaid: "120",
-        days: "12",
-        mealType: "breakfast",
-        userId: "sample",
-        paymentId: "sample",
-        address: "sample",
-        startDate: "sample",
-        chefId: "sample",
-        weekEnds: true);
+  Future<OrderData> makeOrdersData(String uuid) async {
+    int amountPaid = 0;
+    String mealType;
+
+    switch (widget.days) {
+      case 3:
+        {
+          amountPaid = widget.data.threeDayCost;
+          break;
+        }
+      case 7:
+        {
+          amountPaid = widget.data.sevenDayCost;
+          break;
+        }
+      case 30:
+        {
+          amountPaid = widget.data.thirtyDayCost;
+          break;
+        }
+    }
+
+    switch (widget.data.selected) {
+      case 0:
+        {
+          mealType = "breakfast";
+          break;
+        }
+      case 1:
+        {
+          mealType = "lunch";
+          break;
+        }
+      case 2:
+        {
+          mealType = "dinner";
+          break;
+        }
+    }
+
+    var order = OrderData.make(
+        amountPaid: amountPaid.toString(),
+        days: widget.days.toString(),
+        mealType: mealType,
+        userId: uuid,
+        startDate:"${selectedDate.year}-${selectedDate.month}-${selectedDate.day}",
+        paymentId: "sampleII",
+        address: "${currentAddress.locationName},"
+            "${currentAddress.buildingName},"
+            "${currentAddress.streetName},"
+            "${currentAddress.landMark}",
+        chefId: widget.data.chefId,
+        weekEnds: onWeekEnds.toString());
     return order;
   }
-
-
 }

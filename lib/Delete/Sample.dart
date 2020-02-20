@@ -21,9 +21,9 @@ class SampleLunch extends StatelessWidget {
           return ListView.builder(
               itemCount: list.data.length,
               itemBuilder: (context, i) {
-                LunchData Data = list.data[i];
+                MealData data = list.data[i];
                 return FoodMenuWidget(
-                  data: lunchData,
+                  data: data,
                 );
               });
         } else {
@@ -45,7 +45,7 @@ class SampleBreakFast extends StatelessWidget {
           return ListView.builder(
               itemCount: list.data.length,
               itemBuilder: (context, i) {
-                BreakFastData breakFastData = list.data[i];
+                MealData breakFastData = list.data[i];
                 return FoodMenuWidget(
                   data: breakFastData,
                 );
@@ -69,7 +69,7 @@ class SampleDinner extends StatelessWidget {
           return ListView.builder(
               itemCount: list.data.length,
               itemBuilder: (context, i) {
-                DinnerData dinnerDataData = list.data[i];
+                MealData dinnerDataData = list.data[i];
                 return FoodMenuWidget(
                   data: dinnerDataData,
                 );

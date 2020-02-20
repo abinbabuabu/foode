@@ -6,16 +6,6 @@ import 'package:foodie/Provider/Dataclass.dart';
 import 'dart:convert';
 
 
-/*
-
-!!!Selected !!
-
-0 -> BreakFast
-1 -> Lunch
-2 -> Dinner
-
- */
-
 class FirebaseProvider extends ChangeNotifier {
   DatabaseReference _firebase;
   AddressData tempAddress;
@@ -23,48 +13,47 @@ class FirebaseProvider extends ChangeNotifier {
   FirebaseUser _user;
   List<AddressData> addressList;
 
-  LunchData selectedLunch;
-  DinnerData selectedDinner;
-  BreakFastData selectedBreakFast;
-
-  int selected;
-
   FirebaseProvider.instantiate() {
     _firebase = FirebaseDatabase.instance.reference();
   }
 
-  Future<List<LunchData>> retrieveLunch() async {
-    List<LunchData> lunchList = List();
+  Future<String> getUuid() async{
+    var uuid = await FirebaseAuth.instance.currentUser();
+    return uuid.uid;
+  }
+
+  Future<List<MealData>> retrieveLunch() async {
+    List<MealData> lunchList = List();
     var data = await _firebase.child("lunch").once().catchError((error) {});
     Map<dynamic, dynamic> _resultMap = data.value;
 
     _resultMap.forEach((key, value) {
-      LunchData lunchData = LunchData.fromSnap(value);
+      MealData lunchData = MealData.fromSnapLunch(value);
       lunchList.add(lunchData);
     });
     return lunchList;
   }
 
-  Future<List<BreakFastData>> retrieveBreakFast() async {
-    List<BreakFastData> breakFastList = List();
+  Future<List<MealData>> retrieveBreakFast() async {
+    List<MealData> breakFastList = List();
     var data = await _firebase.child("breakfast").once().catchError((error) {});
     Map<dynamic, dynamic> _resultMap = data.value;
 
     _resultMap.forEach((key, value) {
-      BreakFastData breakFastData = BreakFastData.fromSnap(value);
+      MealData breakFastData = MealData.fromSnapBreak(value);
       breakFastList.add(breakFastData);
     });
     return breakFastList;
   }
 
-  Future<List<LunchData>> retrieveDinner() async {
-    List<LunchData> lunchList = List();
+  Future<List<MealData>> retrieveDinner() async {
+    List<MealData> lunchList = List();
     var data = await _firebase.child("dinner").once().catchError((error) {});
     Map<dynamic, dynamic> _resultMap = data.value;
 
     _resultMap.forEach((key, value) {
-      LunchData lunchData = LunchData.fromSnap(value);
-      lunchList.add(lunchData);
+      MealData dinnerData = MealData.fromSnapDinner(value);
+      lunchList.add(dinnerData);
     });
     return lunchList;
   }
@@ -111,6 +100,6 @@ class FirebaseProvider extends ChangeNotifier {
     var mjson = json.encode(orderData);
     print(mjson);
     var response = await http.post(url, body: mjson, headers: headers);
-    print(response.statusCode);
+    print(response.body);
   }
 }
