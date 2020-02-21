@@ -6,8 +6,9 @@ import 'Listeners.dart';
 class ItemTile extends StatelessWidget {
   final String text;
   final ButtonClick listener;
+  final IconData icon;
 
-  ItemTile({@required this.text,@required this.listener});
+  ItemTile({@required this.text, @required this.listener, @required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +19,17 @@ class ItemTile extends StatelessWidget {
       margin: EdgeInsets.only(left: 18.0, right: 18.0),
       child: Material(
         child: InkWell(
-          onTap: (){
+          onTap: () {
             listener();
           },
           child: Container(
-            padding: EdgeInsets.only(left: 6.0,right: 6.0),
+            padding: EdgeInsets.only(left: 6.0, right: 6.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Icon(Icons.person),
+                    Icon(icon,color: Colors.redAccent,),
                     SizedBox(
                       width: 10,
                     ),

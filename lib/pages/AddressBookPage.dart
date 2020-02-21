@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodie/Delete/Sample.dart';
+import 'package:foodie/Utils/Sample.dart';
 import 'package:foodie/components/Button.dart';
 import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/pages/MapPage.dart';

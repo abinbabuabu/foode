@@ -85,6 +85,11 @@ flutter:
       fonts:
         - asset: assets/fonts/Montserrat-Bold.ttf
 
+    - family: Customicons
+      fonts:
+        - asset: assets/fonts/Customicons.ttf
+
+
 
   #         style: italic
   #   - family: Trajan Pro

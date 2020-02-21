@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/Provider/Dataclass.dart';
 import 'package:foodie/Provider/FirebaseProvider.dart';
+import 'package:foodie/Utils/customicons_icons.dart';
 import 'package:foodie/components/AddressWidget.dart';
 import 'package:foodie/components/FoodListItem.dart';
 import 'package:foodie/components/FoodMenuWidget.dart';
@@ -9,6 +10,7 @@ import 'package:foodie/components/ItemTile.dart';
 import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/components/SubscriptionTile.dart';
 import 'package:foodie/pages/AddressBookPage.dart';
+import 'package:foodie/pages/SubscriptionDetailsPage.dart';
 import 'package:provider/provider.dart';
 
 class SampleLunch extends StatelessWidget {
@@ -87,18 +89,32 @@ class SampleAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> list = ["Subscriptions", "Address Book", "Support", "Logout"];
+    List<IconData> icons = [
+      Customicons.subscribe,
+      Customicons.notebook,
+      Customicons.support,
+      Customicons.logout
+    ];
     return Container(
       child: ListView.builder(
           itemCount: 4,
           itemBuilder: (context, i) {
             return ItemTile(
               text: list[i],
+              icon:icons[i],
               listener: () {
                 switch (i) {
+                  case 0:
+                    {
+                      Navigator.push(
+                          context, FadeRoute(page: SubscriptionDetailsPage()));
+                      break;
+                    }
                   case 1:
                     {
                       Navigator.push(
                           context, FadeRoute(page: AddressBookPage()));
+                      break;
                     }
                 }
               },
@@ -136,7 +152,6 @@ class SampleAddress extends StatelessWidget {
   }
 }
 
-
 class SamplePlanner extends StatelessWidget {
   final String plannerId;
 
@@ -150,7 +165,7 @@ class SamplePlanner extends StatelessWidget {
       builder: (context, list) {
         if (list.hasData) {
           return ListView.builder(
-            scrollDirection: Axis.horizontal,
+              scrollDirection: Axis.horizontal,
               itemCount: list.data.length,
               itemBuilder: (context, i) {
                 PlannerData plannerData = list.data[i];

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodie/Delete/Sample.dart';
+import 'package:foodie/Utils/Sample.dart';
 import 'package:foodie/components/ProfileCard.dart';
 
 class AccountPage extends StatelessWidget {

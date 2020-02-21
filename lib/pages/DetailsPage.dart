@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:foodie/Delete/Sample.dart';
 import 'package:foodie/Provider/FirebaseProvider.dart';
+import 'package:foodie/Utils/Sample.dart';
 import 'package:provider/provider.dart';
 
 class DetailsPage extends StatefulWidget {

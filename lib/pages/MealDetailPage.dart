@@ -4,17 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image/network.dart';
-import 'package:foodie/Delete/Sample.dart';
 import 'package:foodie/Provider/Dataclass.dart';
-import 'package:foodie/Provider/FirebaseProvider.dart';
+import 'package:foodie/Utils/Sample.dart';
 import 'package:foodie/components/Divider.dart';
-import 'package:foodie/components/FoodListItem.dart';
 import 'package:foodie/components/PlanButtonWidget.dart';
 import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/components/TextUndelineWidget.dart';
-import 'package:foodie/pages/RazorPayPage.dart';
 import 'package:foodie/pages/SubscriptionPage.dart';
-import 'package:provider/provider.dart';
 
 class MealDetailPage extends StatelessWidget {
   final MealData  data;

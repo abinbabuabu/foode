@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodie/Delete/Sample.dart';
+import 'package:foodie/Utils/Sample.dart';
 
 class SubscriptionDetailsPage extends StatelessWidget {
   @override
@@ -30,7 +30,7 @@ class SubscriptionDetailsPage extends StatelessWidget {
                     top: 4,
                     bottom: 0,
                     child: Container(
-                        child: SampleAccount(),
+                        child: SampleSubscription(),
                         padding: EdgeInsets.only(top: 20),
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/Provider/FirebaseProvider.dart';
+import 'package:foodie/Utils/customicons_icons.dart';
 import 'package:foodie/pages/AccountPage.dart';
 import 'package:foodie/pages/DetailsPage.dart';
 import 'package:foodie/pages/SubscriptionDetailsPage.dart';
@@ -40,10 +41,10 @@ class _TabPageState extends State<TabPage> {
         currentIndex: _currentIndex,
         onTap: _onTapped,
         items: [
+          BottomNavigationBarItem(activeIcon: Icon(Customicons.details_unselected,color: Colors.red),
+              icon: Icon(Customicons.details_selected,), title: Text("Subscribe")),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text("Subscribe")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text("Account"))
+              icon: Icon(Customicons.account_selected), title: Text("Account"))
         ],
       ),
     );
