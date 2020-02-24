@@ -5,19 +5,23 @@ import 'package:http/http.dart' as http;
 import 'package:foodie/Provider/Dataclass.dart';
 import 'dart:convert';
 
-
 class FirebaseProvider extends ChangeNotifier {
   DatabaseReference _firebase;
   AddressData tempAddress;
   bool isAddressAdded;
   FirebaseUser _user;
+  String _locationName;
+
+  String get locationName => _locationName;
+
+
   List<AddressData> addressList;
 
   FirebaseProvider.instantiate() {
     _firebase = FirebaseDatabase.instance.reference();
   }
 
-  Future<String> getUuid() async{
+  Future<String> getUuid() async {
     var uuid = await FirebaseAuth.instance.currentUser();
     return uuid.uid;
   }
@@ -66,6 +70,7 @@ class FirebaseProvider extends ChangeNotifier {
         .child("Address")
         .push()
         .set(<String, String>{
+      "name": addressData.name,
       "locationName": addressData.locationName,
       "buildingName": addressData.buildingName,
       "streetName": addressData.streetName,
@@ -103,10 +108,13 @@ class FirebaseProvider extends ChangeNotifier {
     print(response.body);
   }
 
-
-  Future<List<PlannerData>> getPlannerDetails(String plannerId) async{
+  Future<List<PlannerData>> getPlannerDetails(String plannerId) async {
     List<PlannerData> plannerList = List();
-    var data = await _firebase.child("plannerId").child(plannerId).once().catchError((error) {});
+    var data = await _firebase
+        .child("plannerId")
+        .child(plannerId)
+        .once()
+        .catchError((error) {});
     Map<dynamic, dynamic> _resultMap = data.value;
     _resultMap.forEach((key, value) {
       PlannerData plannerData = PlannerData.fromSnap(value);
@@ -114,5 +122,4 @@ class FirebaseProvider extends ChangeNotifier {
     });
     return plannerList;
   }
-
 }

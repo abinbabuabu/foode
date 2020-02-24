@@ -46,7 +46,7 @@ class FoodMenuWidget extends StatelessWidget {
               ),
             ),
             ChefAddressMinimal(
-              chefName: "Homely - Sai Nagar",
+              chefName: data.homeName,
               chefAddress: data.homeDesc,
             ),
             SizedBox(

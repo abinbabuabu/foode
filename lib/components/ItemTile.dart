@@ -29,7 +29,7 @@ class ItemTile extends StatelessWidget {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Icon(icon,color: Colors.redAccent,),
+                    Icon(icon,color: Colors.grey,),
                     SizedBox(
                       width: 10,
                     ),

@@ -11,11 +11,11 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  String _address;
+
   @override
   Widget build(BuildContext context) {
     print("build called");
-    var provider = Provider.of<FirebaseProvider>(context);
-    provider.retrieveLunch();
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Color(0xFF6C3106),
@@ -41,7 +41,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     height: 4,
                   ),
                   Text(
-                    "Address name here",
+                    "Unknown Location",
                     style: TextStyle(
                         color: Colors.white,
                         fontFamily: "MontserratB",

@@ -13,7 +13,8 @@ import 'package:foodie/components/TextUndelineWidget.dart';
 import 'package:foodie/pages/SubscriptionPage.dart';
 
 class MealDetailPage extends StatelessWidget {
-  final MealData  data;
+  final MealData data;
+
   MealDetailPage({@required this.data});
 
   @override
@@ -27,7 +28,6 @@ class MealDetailPage extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double _topHeight = height / 4;
     double _bottomHeight = height - _topHeight - 24;
-
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -56,12 +56,13 @@ class MealDetailPage extends StatelessWidget {
                           text: "View Plan",
                         ),
                         Container(
-                          height: 200,
-                          width: double.infinity,
-                          child: SamplePlanner(plannerId:getPlannerId(data),)
-                        ),
+                            height: 200,
+                            width: double.infinity,
+                            child: SamplePlanner(
+                              plannerId: getPlannerId(data),
+                            )),
                         TextUnderlineWidget(
-                          text: "Homely - Sai Nagar",
+                          text: data.homeName,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -144,24 +145,33 @@ class MealDetailPage extends StatelessWidget {
                           days: "3",
                           price: data.threeDayCost.toString(),
                           listener: () {
-                            Navigator.of(context)
-                                .push(FadeRoute(page: SubscriptionPage(data: data,days: 3,)));
+                            Navigator.of(context).push(FadeRoute(
+                                page: SubscriptionPage(
+                              data: data,
+                              days: 3,
+                            )));
                           },
                         ),
                         PlanButtonWidget(
                           days: "7",
                           price: data.sevenDayCost.toString(),
                           listener: () {
-                            Navigator.of(context)
-                                .push(FadeRoute(page: SubscriptionPage(data: data,days: 7,)));
+                            Navigator.of(context).push(FadeRoute(
+                                page: SubscriptionPage(
+                              data: data,
+                              days: 7,
+                            )));
                           },
                         ),
                         PlanButtonWidget(
                           days: "30",
                           price: data.thirtyDayCost.toString(),
                           listener: () {
-                            Navigator.of(context)
-                                .push(FadeRoute(page: SubscriptionPage(data: data,days: 30,)));
+                            Navigator.of(context).push(FadeRoute(
+                                page: SubscriptionPage(
+                              data: data,
+                              days: 30,
+                            )));
                           },
                         )
                       ],
@@ -220,17 +230,34 @@ class MealDetailPage extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ))
+                  )),
+              Positioned(
+                left: 4,
+                top: 6,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              )
             ],
           ),
         ),
       ),
     );
   }
-  String getPlannerId(MealData data){
+
+  String getPlannerId(MealData data) {
     int selected = data.selected;
-    if(selected ==0) return data.breakfastPlannerId;
-    else if(selected == 1) return data.lunchPlannerId;
-    else return data.dinnerPlannerId;
+    if (selected == 0)
+      return data.breakfastPlannerId;
+    else if (selected == 1)
+      return data.lunchPlannerId;
+    else
+      return data.dinnerPlannerId;
   }
 }

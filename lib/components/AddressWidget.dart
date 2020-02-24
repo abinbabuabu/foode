@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie/Provider/Dataclass.dart';
 
 class AddressWidget extends StatelessWidget {
+  final AddressData addressData;
+
+  AddressWidget({@required this.addressData});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -19,13 +24,14 @@ class AddressWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "S Paul Arasu",
+                    addressData.name,
                     style: TextStyle(fontFamily: "MontserratB", fontSize: 16),
                   ),
                   Text(
-                    "B4 701 , Bad apartment, Kanmanike, Kumbalgodu, Kengeri 540074",
+                    addressData.locationName + ", " + addressData.buildingName +
+                        ", " + addressData.streetName + ", " + addressData.landMark,
                     maxLines: 3,
-                    style: TextStyle(height: 1.5,color: Color(0xFF424241)),
+                    style: TextStyle(height: 1.5, color: Color(0xFF424241)),
                     overflow: TextOverflow.ellipsis,
                   )
                 ],

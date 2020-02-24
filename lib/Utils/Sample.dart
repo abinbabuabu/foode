@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/Provider/Dataclass.dart';
@@ -10,6 +11,7 @@ import 'package:foodie/components/ItemTile.dart';
 import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/components/SubscriptionTile.dart';
 import 'package:foodie/pages/AddressBookPage.dart';
+import 'package:foodie/pages/LoginPage.dart';
 import 'package:foodie/pages/SubscriptionDetailsPage.dart';
 import 'package:provider/provider.dart';
 
@@ -101,7 +103,7 @@ class SampleAccount extends StatelessWidget {
           itemBuilder: (context, i) {
             return ItemTile(
               text: list[i],
-              icon:icons[i],
+              icon: icons[i],
               listener: () {
                 switch (i) {
                   case 0:
@@ -116,6 +118,12 @@ class SampleAccount extends StatelessWidget {
                           context, FadeRoute(page: AddressBookPage()));
                       break;
                     }
+                  case 3:{
+                    FirebaseAuth.instance.signOut().then((value){
+                      Navigator.pushReplacement(context, SlideRightRoute(page: LoginPage()));
+                    });
+                    break;
+                  }
                 }
               },
             );
@@ -141,12 +149,13 @@ class SampleSubscription extends StatelessWidget {
 class SampleAddress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<String> list = ["Subscriptions", "Address Book", "Support", "Logout"];
+    var provider = Provider.of<FirebaseProvider>(context);
+    List<AddressData> addressList = provider.addressList;
     return Container(
       child: ListView.builder(
-          itemCount: 8,
+          itemCount: addressList.length,
           itemBuilder: (context, i) {
-            return AddressWidget();
+            return AddressWidget(addressData: addressList[i],);
           }),
     );
   }
@@ -154,6 +163,19 @@ class SampleAddress extends StatelessWidget {
 
 class SamplePlanner extends StatelessWidget {
   final String plannerId;
+  List<String> monthList = [
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "NOV",
+    "DEC"
+  ];
 
   SamplePlanner({@required this.plannerId});
 
@@ -169,13 +191,26 @@ class SamplePlanner extends StatelessWidget {
               itemCount: list.data.length,
               itemBuilder: (context, i) {
                 PlannerData plannerData = list.data[i];
-                print(plannerData.details);
-                return FoodListItem();
+                DateTime date = getDateTime(plannerData.date);
+                print(date);
+                return FoodListItem(
+                  img: plannerData.img,
+                  desc: plannerData.details,
+                  day: date.day.toString(),
+                  month: monthList[date.month-1],
+                );
               });
         } else {
           return Center(child: CircularProgressIndicator());
         }
       },
     );
+  }
+
+  DateTime getDateTime(String date) {
+    int day = int.parse(date.substring(0, 2));
+    int month = int.parse(date.substring(3, 5));
+    int year = int.parse(date.substring(6, 10));
+    return DateTime(year, month, day);
   }
 }

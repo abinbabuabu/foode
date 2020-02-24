@@ -44,11 +44,13 @@ class MealData {
   int threeDayCost;
   int sevenDayCost;
   int thirtyDayCost;
+  String homeName;
 
   MealData.fromSnapLunch(Map<dynamic, dynamic> map) {
     lunchPlannerId = map["lunchPlannerId"].toString();
     briefDesc = map["displayInfo"]["BriefDescription"].toString();
     displayName = map["displayInfo"]["DisplayName"].toString();
+    homeName = map["displayInfo"]["Homename"].toString();
     homeDesc = map["displayInfo"]["HomeDescription"];
     priority = map["displayInfo"]["priority"];
     chefImgUrl = map["images"]["chefImg"];
@@ -67,6 +69,7 @@ class MealData {
     breakfastPlannerId = map["breakfastPlannerId"].toString();
     briefDesc = map["displayInfo"]["BriefDescription"].toString();
     displayName = map["displayInfo"]["DisplayName"].toString();
+    homeName = map["displayInfo"]["Homename"].toString();
     homeDesc = map["displayInfo"]["HomeDescription"];
     priority = map["displayInfo"]["priority"];
     chefImgUrl = map["images"]["chefImg"];
@@ -85,6 +88,7 @@ class MealData {
     dinnerPlannerId = map["dinnerPlannerId"].toString();
     briefDesc = map["displayInfo"]["BriefDescription"].toString();
     displayName = map["displayInfo"]["DisplayName"].toString();
+    homeName = map["displayInfo"]["Homename"].toString();
     homeDesc = map["displayInfo"]["HomeDescription"];
     priority = map["displayInfo"]["priority"];
     chefImgUrl = map["images"]["chefImg"];
@@ -101,18 +105,20 @@ class MealData {
 }
 
 class AddressData {
+  String name;
   String locationName;
   String buildingName;
   String streetName;
   String landMark = "";
 
   AddressData(
-      {@required this.locationName,
+      {@required this.name,@required this.locationName,
       @required this.buildingName,
       @required this.streetName,
       this.landMark});
 
   AddressData.fromSnap(Map<dynamic, dynamic> map) {
+    name = map["name"];
     locationName = map["locationName"];
     buildingName = map["buildingName"];
     streetName = map["streetName"];
