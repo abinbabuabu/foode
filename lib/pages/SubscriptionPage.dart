@@ -103,7 +103,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                 value: i,
                                 onChanged: addressChange,
                               ),
-                              Text("${addressList[i].name.toLowerCase()}")
+                              Text("${addressList[i].name}")
                             ],
                           );
                         }),

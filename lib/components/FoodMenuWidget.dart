@@ -8,9 +8,11 @@ import 'package:foodie/components/Divider.dart';
 import 'package:foodie/components/PriceWidget.dart';
 import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/pages/MealDetailPage.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class FoodMenuWidget extends StatelessWidget {
   final MealData data;
+
   FoodMenuWidget({@required this.data});
 
   @override
@@ -32,8 +34,9 @@ class FoodMenuWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Image(
-              image: NetworkImageWithRetry(data.coverImgUrl,),
+            FadeInImage.assetNetwork(
+              placeholder:"placeholder.jpg",
+              image: data.coverImgUrl,
               height: 144,
               fit: BoxFit.fill,
               width: double.infinity,

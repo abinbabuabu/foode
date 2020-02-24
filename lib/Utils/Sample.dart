@@ -191,7 +191,7 @@ class SamplePlanner extends StatelessWidget {
               itemCount: list.data.length,
               itemBuilder: (context, i) {
                 PlannerData plannerData = list.data[i];
-                DateTime date = getDateTime(plannerData.date);
+                DateTime date = plannerData.date;
                 print(date);
                 return FoodListItem(
                   img: plannerData.img,
@@ -207,10 +207,5 @@ class SamplePlanner extends StatelessWidget {
     );
   }
 
-  DateTime getDateTime(String date) {
-    int day = int.parse(date.substring(0, 2));
-    int month = int.parse(date.substring(3, 5));
-    int year = int.parse(date.substring(6, 10));
-    return DateTime(year, month, day);
-  }
+
 }

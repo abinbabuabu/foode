@@ -113,6 +113,7 @@ class MealData {
     homeName = StringUtils.capitalize(homeName);
     homeDesc = StringUtils.capitalize(homeDesc);
   }
+
 }
 
 class AddressData {
@@ -220,7 +221,8 @@ class OrderData {
 class PlannerData {
   String details;
   String img;
-  String date;
+  DateTime date;
+  String dates;
   String name;
   String key;
   String type;
@@ -228,11 +230,12 @@ class PlannerData {
   PlannerData.fromSnap(Map<dynamic, dynamic> map) {
     details = map["details"];
     img = map["img"];
-    date = map["key"];
+    dates = map["key"];
     name = map["name"];
     key = map["pushKey"];
     type = map["type"];
     capitalise();
+    dateConvert();
   }
 
   capitalise(){
@@ -240,4 +243,10 @@ class PlannerData {
     details = StringUtils.capitalize(details);
   }
 
+  dateConvert(){
+    int day = int.parse(dates.substring(0, 2));
+    int month = int.parse(dates.substring(3, 5));
+    int year = int.parse(dates.substring(6, 10));
+    date=  DateTime(year, month, day);
+  }
 }
