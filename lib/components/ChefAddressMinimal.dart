@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image/network.dart';
 
 class ChefAddressMinimal extends StatelessWidget {
   final String chefName;
@@ -7,7 +8,7 @@ class ChefAddressMinimal extends StatelessWidget {
   final img;
 
   ChefAddressMinimal(
-      {this.img, @required this.chefName, @required this.chefAddress});
+      {@required this.img, @required this.chefName, @required this.chefAddress});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,14 @@ class ChefAddressMinimal extends StatelessWidget {
               height: 30,
               decoration:
                   BoxDecoration(color: Colors.grey, shape: BoxShape.circle),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image(
+                  image: NetworkImageWithRetry(img,),
+                  fit: BoxFit.fill,
+                  width: double.infinity,
+                ),
+              ),
             ),
             SizedBox(
               width: 16,

@@ -14,7 +14,7 @@ class ItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: Colors.grey, width: 2))),
+          border: Border(bottom: BorderSide(color: Colors.grey, width: 1))),
       height: 60,
       margin: EdgeInsets.only(left: 18.0, right: 18.0),
       child: Material(

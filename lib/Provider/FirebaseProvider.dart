@@ -21,9 +21,9 @@ class FirebaseProvider extends ChangeNotifier {
     _firebase = FirebaseDatabase.instance.reference();
   }
 
-  Future<String> getUuid() async {
-    var uuid = await FirebaseAuth.instance.currentUser();
-    return uuid.uid;
+  Future<FirebaseUser> getUuid() async {
+    var user = await FirebaseAuth.instance.currentUser();
+    return user;
   }
 
   Future<List<MealData>> retrieveLunch() async {
@@ -74,7 +74,9 @@ class FirebaseProvider extends ChangeNotifier {
       "locationName": addressData.locationName,
       "buildingName": addressData.buildingName,
       "streetName": addressData.streetName,
-      "landMark": addressData.landMark
+      "landMark": addressData.landMark,
+      "lat":addressData.lat,
+      "lng":addressData.lng
     }).then((val) {
       return true;
     }).catchError((e) {
@@ -83,7 +85,7 @@ class FirebaseProvider extends ChangeNotifier {
     return result;
   }
 
-  Future<void> getAddresses() async {
+  Future<List<AddressData>> getAddresses() async {
     addressList = List();
     _user = await FirebaseAuth.instance.currentUser();
     var data = await _firebase
@@ -97,6 +99,7 @@ class FirebaseProvider extends ChangeNotifier {
       AddressData addressData = AddressData.fromSnap(value);
       addressList.add(addressData);
     });
+    return addressList;
   }
 
   void postOrder(OrderData orderData) async {

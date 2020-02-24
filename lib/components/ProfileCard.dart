@@ -2,11 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileCard extends StatelessWidget {
+  final String mb;
+
+  ProfileCard({@required this.mb});
+
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(16),
-      color: Theme.of(context).accentColor,
+      color: Theme
+          .of(context)
+          .accentColor,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       child: Container(
@@ -27,10 +33,11 @@ class ProfileCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text("Mobile Number",style: TextStyle(fontSize: 10,color: Colors.grey),),
+              Text("Mobile Number",
+                style: TextStyle(fontSize: 10, color: Colors.grey),),
               SizedBox(height: 4,),
               Text(
-                "+91 944 244 9431",
+                mb,
                 style: TextStyle(
                     fontFamily: "MontserratB",
                     color: Colors.black,

@@ -16,7 +16,7 @@ class _DetailsPageState extends State<DetailsPage> {
   @override
   Widget build(BuildContext context) {
     print("build called");
-
+    var provider = Provider.of<FirebaseProvider>(context);
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Color(0xFF6C3106),
       statusBarIconBrightness: Brightness.light,
@@ -40,13 +40,28 @@ class _DetailsPageState extends State<DetailsPage> {
                   SizedBox(
                     height: 4,
                   ),
-                  Text(
-                    "Unknown Location",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "MontserratB",
-                        fontSize: 16),
-                  )
+                  FutureBuilder(
+                    future: provider.getAddresses(),
+                    builder: (context, list) {
+                      if (list.hasData) {
+                        return Text(
+                          list.data[0].name,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "MontserratB",
+                              fontSize: 16),
+                        );
+                      } else {
+                        return Text(
+                          "Unknown Location",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "MontserratB",
+                              fontSize: 16),
+                        );
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
@@ -67,33 +82,40 @@ class _DetailsPageState extends State<DetailsPage> {
                 child: DefaultTabController(
                   child: Scaffold(
                     appBar: PreferredSize(
-                    preferredSize: Size.fromHeight(40),
+                      preferredSize: Size.fromHeight(40),
                       child: AppBar(
                         elevation: 0,
                         backgroundColor: Colors.white,
                         flexibleSpace: TabBar(
-                          indicatorPadding: EdgeInsets.symmetric(horizontal: 6,vertical: -4),
-                          unselectedLabelColor:Color(0xFFCD9B7A) ,
-                          labelColor:Color(0xFF653413) ,
-                          labelStyle:TextStyle(fontSize: 16,fontFamily: "Montseratt") ,
+                          indicatorPadding:
+                              EdgeInsets.symmetric(horizontal: 6, vertical: -4),
+                          unselectedLabelColor: Color(0xFFCD9B7A),
+                          labelColor: Color(0xFF653413),
+                          labelStyle:
+                              TextStyle(fontSize: 16, fontFamily: "Montseratt"),
                           indicatorColor: Color(0xFFF7BE02),
                           indicatorSize: TabBarIndicatorSize.label,
-                          labelPadding: EdgeInsets.symmetric(horizontal: 2.0 ),
+                          labelPadding: EdgeInsets.symmetric(horizontal: 2.0),
                           indicatorWeight: 5,
                           tabs: <Widget>[
-                            Text("Breakfast",),
+                            Text(
+                              "Breakfast",
+                            ),
                             Text("Lunch"),
                             Text("Dinner")
                           ],
                         ),
                       ),
                     ),
-                    body: TabBarView(children: <Widget>[
-                     SampleBreakFast(),
-                      SampleLunch(),
-                      SampleDinner()
-                    ],),
-                  ), length: 3,
+                    body: TabBarView(
+                      children: <Widget>[
+                        SampleBreakFast(),
+                        SampleLunch(),
+                        SampleDinner()
+                      ],
+                    ),
+                  ),
+                  length: 3,
                 ),
               ),
             )

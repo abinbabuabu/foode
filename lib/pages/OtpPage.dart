@@ -7,6 +7,7 @@ import 'package:foodie/components/ProfileCard.dart';
 import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/pages/AccountPage.dart';
 import 'package:foodie/pages/DetailsPage.dart';
+import 'package:foodie/pages/LoginPage.dart';
 import 'package:foodie/pages/MapPage.dart';
 import 'package:foodie/pages/TabPage.dart';
 import 'package:pinput/pin_put/pin_put.dart';
@@ -94,21 +95,21 @@ class _OtpPageState extends State<OtpPage> {
               return TabPage();
         }));
       } else if (state == PhoneAuthState.newUser) {
-        /*
+
         print(state);
         Navigator.of(_scaffoldKey.currentContext)
             .pushReplacement(SlideRightRoute(
                 page: MapPage(
           key: _globalKey,
         )));
-         */
+
       } else {
-        /* _displaySnackBar(context, "Login failed!  Try again later ");
         Future.delayed(Duration(seconds: 8),(){
-          Navigator.of(_scaffoldKey.currentContext).pushReplacementNamed(HomePage.routeName);
+          Navigator.of(_scaffoldKey.currentContext).pushReplacement(MaterialPageRoute(builder: (_){
+            return LoginPage();
+          }));
         }) ;
 
-        */
       }
     });
   }

@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -63,6 +64,7 @@ class MealData {
     threeDayCost = map["price"]["threedayCost"];
     thirtyDayCost = map["price"]["thirtydayCost"];
     selected = 1;
+    capitalise();
   }
 
   MealData.fromSnapBreak(Map<dynamic, dynamic> map) {
@@ -82,6 +84,7 @@ class MealData {
     threeDayCost = map["price"]["threedayCost"];
     thirtyDayCost = map["price"]["thirtydayCost"];
     selected = 0;
+    capitalise();
   }
 
   MealData.fromSnapDinner(Map<dynamic, dynamic> map) {
@@ -101,6 +104,14 @@ class MealData {
     threeDayCost = map["price"]["threedayCost"];
     thirtyDayCost = map["price"]["thirtydayCost"];
     selected = 2;
+    capitalise();
+  }
+
+  capitalise() {
+    briefDesc = StringUtils.capitalize(briefDesc);
+    displayName = StringUtils.capitalize(displayName);
+    homeName = StringUtils.capitalize(homeName);
+    homeDesc = StringUtils.capitalize(homeDesc);
   }
 }
 
@@ -110,9 +121,12 @@ class AddressData {
   String buildingName;
   String streetName;
   String landMark = "";
+  String lat = "";
+  String lng = "";
 
   AddressData(
-      {@required this.name,@required this.locationName,
+      {@required this.name,
+      @required this.locationName,
       @required this.buildingName,
       @required this.streetName,
       this.landMark});
@@ -123,6 +137,15 @@ class AddressData {
     buildingName = map["buildingName"];
     streetName = map["streetName"];
     landMark = map["landMark"];
+    capitalise();
+  }
+
+  capitalise() {
+    name = StringUtils.capitalize(name);
+    locationName = StringUtils.capitalize(locationName);
+    buildingName = StringUtils.capitalize(buildingName);
+    streetName = StringUtils.capitalize(streetName);
+    landMark = StringUtils.capitalize(landMark);
   }
 }
 
@@ -194,8 +217,7 @@ class OrderData {
       };
 }
 
-
-class PlannerData{
+class PlannerData {
   String details;
   String img;
   String date;
@@ -203,12 +225,19 @@ class PlannerData{
   String key;
   String type;
 
-  PlannerData.fromSnap(Map<dynamic, dynamic> map){
+  PlannerData.fromSnap(Map<dynamic, dynamic> map) {
     details = map["details"];
     img = map["img"];
     date = map["key"];
     name = map["name"];
     key = map["pushKey"];
     type = map["type"];
+    capitalise();
   }
+
+  capitalise(){
+    name = StringUtils.capitalize(name);
+    details = StringUtils.capitalize(details);
+  }
+
 }

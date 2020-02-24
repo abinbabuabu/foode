@@ -33,7 +33,7 @@ class FoodMenuWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Image(
-              image: NetworkImageWithRetry(data.coverImgUrl),
+              image: NetworkImageWithRetry(data.coverImgUrl,),
               height: 144,
               fit: BoxFit.fill,
               width: double.infinity,
@@ -46,6 +46,7 @@ class FoodMenuWidget extends StatelessWidget {
               ),
             ),
             ChefAddressMinimal(
+              img: data.chefImgUrl,
               chefName: data.homeName,
               chefAddress: data.homeDesc,
             ),

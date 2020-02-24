@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie/Provider/Dataclass.dart';
@@ -14,14 +13,12 @@ class MapPage extends StatelessWidget {
   MapPage({Key key}) : super(key: key);
   PredictionResult clickedResult;
   static const LatLng _center = const LatLng(12.9715987, 77.59456269999998);
+  LatLng _current = _center;
 
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<MapProvider>(context);
     var dbProvider = Provider.of<FirebaseProvider>(context);
-
-    //TODO("Google Map Error. Fix It by Updating the Flutter Package from Another Repo")
-
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -39,12 +36,14 @@ class MapPage extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   print("Clicked Search");
-                  var result =showSearch(context: context, delegate: CustomSearch());
+                  var result =
+                      showSearch(context: context, delegate: CustomSearch());
                   result.then((value) {
                     for (var i in value) {
                       clickedResult = i;
                     }
                     provider.moveToLocation(clickedResult.latLng);
+                    _current = clickedResult.latLng;
                   });
                 },
                 child: AbsorbPointer(
@@ -72,10 +71,12 @@ class MapPage extends StatelessWidget {
                     markers: provider.markers,
                     myLocationButtonEnabled: true,
                     myLocationEnabled: true,
+                    mapToolbarEnabled: false,
                     onMapCreated: provider.onMapCreated,
                     initialCameraPosition: CameraPosition(target: _center),
                     onTap: (latLng) {
                       provider.moveToLocation(latLng);
+                      _current = latLng;
                     },
                   )),
               SizedBox(
@@ -102,13 +103,15 @@ class MapPage extends StatelessWidget {
                           child: ModalBottomDialog(),
                         );
                       });
-                  result.then((value){
-                    if(value == true && dbProvider.isAddressAdded == true){
-                      dbProvider.addAddress(dbProvider.tempAddress).then((val){
-                        if(val){
+                  result.then((value) {
+                    if (value == true && dbProvider.isAddressAdded == true) {
+                      dbProvider.tempAddress.lat = _current.latitude.toString();
+                      dbProvider.tempAddress.lng =
+                          _current.longitude.toString();
+                      dbProvider.addAddress(dbProvider.tempAddress).then((val) {
+                        if (val) {
                           print("address Added");
-                        }
-                        else
+                        } else
                           print("Failed");
                       });
                     }

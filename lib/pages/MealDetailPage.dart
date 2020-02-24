@@ -209,11 +209,7 @@ class MealDetailPage extends StatelessWidget {
                                 SizedBox(
                                   height: 4,
                                 ),
-                                mDivider(
-                                  color: 0xFFFFD00A,
-                                  height: 4,
-                                  width: 92,
-                                ),
+                                selectUnderLine(data.displayName),
                                 SizedBox(
                                   height: 4,
                                 ),
@@ -259,5 +255,21 @@ class MealDetailPage extends StatelessWidget {
       return data.lunchPlannerId;
     else
       return data.dinnerPlannerId;
+  }
+
+  Widget selectUnderLine(String name) {
+    if (name.length > 10)
+      return mDivider(
+        color: 0xFFFFD00A,
+        height: 4,
+        width: 92,
+      );
+    else {
+      return mDivider(
+        color: 0xFFFFD00A,
+        height: 4,
+        width: name.length *7.2,
+      );
+    }
   }
 }

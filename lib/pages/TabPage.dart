@@ -32,7 +32,6 @@ class _TabPageState extends State<TabPage> {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<FirebaseProvider>(context).getAddresses();
     return Scaffold(
       body: SafeArea(
         child: _children[_currentIndex],
