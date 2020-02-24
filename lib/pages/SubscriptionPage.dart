@@ -108,28 +108,31 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               ),
               TextUnderlineWidget(text: "Total Bill"),
               BillWidget(),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ButtonTheme(
-                  height: 43,
-                  minWidth: double.infinity,
-                  child: RaisedButton(
-                    color: Theme.of(context).accentColor,
-                    onPressed: () {
-                      if(checkForSatSun()) {
-                        provider.getUuid().then((uuid) {
-                          makeOrdersData(uuid).then((value) {
-                            provider.postOrder(value);
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ButtonTheme(
+                    height: 43,
+                    minWidth: double.infinity,
+                    child: RaisedButton(
+                      color: Theme.of(context).accentColor,
+                      onPressed: () {
+                        if(checkForSatSun()) {
+                          provider.getUuid().then((uuid) {
+                            makeOrdersData(uuid).then((value) {
+                              provider.postOrder(value);
+                            });
                           });
-                        });
-                      }
-                    },
-                    child: Text(
-                      "Proceed to Pay",
-                      style: TextStyle(color: Color(0xFF7B4E06)),
+                        }
+                      },
+                      child: Text(
+                        "Proceed to Pay",
+                        style: TextStyle(color: Color(0xFF7B4E06)),
+                      ),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
                     ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
                   ),
                 ),
               )

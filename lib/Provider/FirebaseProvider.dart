@@ -120,6 +120,7 @@ class FirebaseProvider extends ChangeNotifier {
       PlannerData plannerData = PlannerData.fromSnap(value);
       plannerList.add(plannerData);
     });
+    plannerList.sort((a,b) => a.date.compareTo(b.date));
     return plannerList;
   }
 }
