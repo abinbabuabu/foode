@@ -6,7 +6,6 @@ import 'package:foodie/Provider/LoginProvider.dart';
 import 'package:foodie/components/Button.dart';
 import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/pages/OtpPage.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override

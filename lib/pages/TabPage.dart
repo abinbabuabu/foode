@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foodie/Provider/FirebaseProvider.dart';
 import 'package:foodie/Utils/customicons_icons.dart';
 import 'package:foodie/pages/AccountPage.dart';
 import 'package:foodie/pages/DetailsPage.dart';
-import 'package:foodie/pages/SubscriptionDetailsPage.dart';
-import 'package:provider/provider.dart';
 
 class TabPage extends StatefulWidget {
   @override

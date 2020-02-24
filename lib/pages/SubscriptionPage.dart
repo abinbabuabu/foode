@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:foodie/Provider/Dataclass.dart';
 import 'package:foodie/Provider/FirebaseProvider.dart';
 import 'package:foodie/components/BillWidget.dart';
-import 'package:foodie/components/Button.dart';
 import 'package:foodie/components/TextUndelineWidget.dart';
 import 'package:foodie/components/date_picker_timeline.dart';
 import 'package:provider/provider.dart';
@@ -233,4 +232,6 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         }
     }
   }
+
+
 }

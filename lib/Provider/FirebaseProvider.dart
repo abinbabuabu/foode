@@ -1,9 +1,10 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:foodie/Provider/Dataclass.dart';
-import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class FirebaseProvider extends ChangeNotifier {
   DatabaseReference _firebase;
@@ -14,11 +15,11 @@ class FirebaseProvider extends ChangeNotifier {
 
   String get locationName => _locationName;
 
-
   List<AddressData> addressList;
 
   FirebaseProvider.instantiate() {
     _firebase = FirebaseDatabase.instance.reference();
+
   }
 
   Future<FirebaseUser> getUuid() async {
@@ -75,8 +76,8 @@ class FirebaseProvider extends ChangeNotifier {
       "buildingName": addressData.buildingName,
       "streetName": addressData.streetName,
       "landMark": addressData.landMark,
-      "lat":addressData.lat,
-      "lng":addressData.lng
+      "lat": addressData.lat,
+      "lng": addressData.lng
     }).then((val) {
       return true;
     }).catchError((e) {
@@ -123,7 +124,9 @@ class FirebaseProvider extends ChangeNotifier {
       PlannerData plannerData = PlannerData.fromSnap(value);
       plannerList.add(plannerData);
     });
-    plannerList.sort((a,b) => a.date.compareTo(b.date));
+    plannerList.sort((a, b) => a.date.compareTo(b.date));
     return plannerList;
   }
+
+
 }

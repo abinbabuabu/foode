@@ -1,8 +1,19 @@
 import 'dart:core';
 
-import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+class S {
+  static String capitalize(String v) {
+    return v.replaceAllMapped(RegExp(r'(?:^|(?:[.!?]\s))(\w{1})'),
+        (Match m) => '${m.group(0).toUpperCase()}');
+  }
+
+  static String capitalizeW(String v) {
+    return v.replaceAllMapped(RegExp(r'(^\w{1})|(\s{1}\w{1})'),
+        (Match m) => '${m.group(0).toUpperCase()}');
+  }
+}
 
 class PredictionResult {
   String id;
@@ -64,6 +75,7 @@ class MealData {
     threeDayCost = map["price"]["threedayCost"];
     thirtyDayCost = map["price"]["thirtydayCost"];
     selected = 1;
+    lower();
     capitalise();
   }
 
@@ -84,6 +96,7 @@ class MealData {
     threeDayCost = map["price"]["threedayCost"];
     thirtyDayCost = map["price"]["thirtydayCost"];
     selected = 0;
+    lower();
     capitalise();
   }
 
@@ -104,16 +117,23 @@ class MealData {
     threeDayCost = map["price"]["threedayCost"];
     thirtyDayCost = map["price"]["thirtydayCost"];
     selected = 2;
+    lower();
     capitalise();
   }
 
-  capitalise() {
-    briefDesc = StringUtils.capitalize(briefDesc);
-    displayName = StringUtils.capitalize(displayName);
-    homeName = StringUtils.capitalize(homeName);
-    homeDesc = StringUtils.capitalize(homeDesc);
+  lower() {
+    briefDesc = briefDesc.toLowerCase();
+    displayName = displayName.toLowerCase();
+    homeDesc = homeDesc.toLowerCase();
+    homeName = homeName.toLowerCase();
   }
 
+  capitalise() {
+    briefDesc = S.capitalize(briefDesc);
+    displayName = S.capitalize(displayName);
+    homeName = S.capitalizeW(homeName);
+    homeDesc = S.capitalize(homeDesc);
+  }
 }
 
 class AddressData {
@@ -133,20 +153,20 @@ class AddressData {
       this.landMark});
 
   AddressData.fromSnap(Map<dynamic, dynamic> map) {
-    name = map["name"];
-    locationName = map["locationName"];
-    buildingName = map["buildingName"];
-    streetName = map["streetName"];
-    landMark = map["landMark"];
+    name = map["name"].toString().toLowerCase();
+    locationName = map["locationName"].toString().toLowerCase();
+    buildingName = map["buildingName"].toString().toLowerCase();
+    streetName = map["streetName"].toString().toLowerCase();
+    landMark = map["landMark"].toString().toLowerCase();
     capitalise();
   }
 
   capitalise() {
-    name = StringUtils.capitalize(name);
-    locationName = StringUtils.capitalize(locationName);
-    buildingName = StringUtils.capitalize(buildingName);
-    streetName = StringUtils.capitalize(streetName);
-    landMark = StringUtils.capitalize(landMark);
+    name = S.capitalizeW(name);
+    locationName = S.capitalize(locationName);
+    buildingName = S.capitalize(buildingName);
+    streetName = S.capitalize(streetName);
+    landMark = S.capitalize(landMark);
   }
 }
 
@@ -159,30 +179,6 @@ class PaymentData {
     @required this.desc,
   });
 }
-
-/*
-userid
-payid
-amount
-address
-startdate
-days
-weekend
-chefid
-mealType
-*/
-//{
-//"userId":"Paul Arasu",
-//"chefId":"Something",
-//"paymentId":"hello",
-//"amountPaid":240,
-//"address":"hello",
-//"startDate":"12-12-12",
-//"mealType":"lunch",
-//"days":"2",
-//"weekEnds":"True"
-//}
-
 class OrderData {
   String userId;
   String paymentId;
@@ -234,19 +230,25 @@ class PlannerData {
     name = map["name"];
     key = map["pushKey"];
     type = map["type"];
+    lower();
     capitalise();
     dateConvert();
   }
 
-  capitalise(){
-    name = StringUtils.capitalize(name);
-    details = StringUtils.capitalize(details);
+  lower(){
+    name = name.toLowerCase();
+    details = details.toLowerCase();
   }
 
-  dateConvert(){
+  capitalise() {
+    name = S.capitalize(name);
+    details = S.capitalize(details);
+  }
+
+  dateConvert() {
     int day = int.parse(dates.substring(0, 2));
     int month = int.parse(dates.substring(3, 5));
     int year = int.parse(dates.substring(6, 10));
-    date=  DateTime(year, month, day);
+    date = DateTime(year, month, day);
   }
 }

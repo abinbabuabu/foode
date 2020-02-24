@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodie/Provider/Dataclass.dart';
 import 'package:foodie/Provider/FirebaseProvider.dart';
 import 'package:foodie/components/Button.dart';
 import 'package:provider/provider.dart';
-import 'package:foodie/Provider/Dataclass.dart';
 
 class ModalBottomDialog extends StatefulWidget {
   @override

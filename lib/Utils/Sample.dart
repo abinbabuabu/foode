@@ -118,12 +118,14 @@ class SampleAccount extends StatelessWidget {
                           context, FadeRoute(page: AddressBookPage()));
                       break;
                     }
-                  case 3:{
-                    FirebaseAuth.instance.signOut().then((value){
-                      Navigator.pushReplacement(context, SlideRightRoute(page: LoginPage()));
-                    });
-                    break;
-                  }
+                  case 3:
+                    {
+                      FirebaseAuth.instance.signOut().then((value) {
+                        Navigator.pushReplacement(
+                            context, SlideRightRoute(page: LoginPage()));
+                      });
+                      break;
+                    }
                 }
               },
             );
@@ -150,13 +152,25 @@ class SampleAddress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<FirebaseProvider>(context);
-    List<AddressData> addressList = provider.addressList;
-    return Container(
-      child: ListView.builder(
-          itemCount: addressList.length,
-          itemBuilder: (context, i) {
-            return AddressWidget(addressData: addressList[i],);
-          }),
+    return FutureBuilder(
+      future: provider.getAddresses(),
+     builder: (context,list){
+       if(list.hasData){
+         return Container(
+           child: ListView.builder(
+               itemCount: list.data.length,
+               itemBuilder: (context, i) {
+                 AddressData data =  list.data[i];
+                 return AddressWidget(
+                   addressData: data,
+                 );
+               }),
+         );
+       }
+       else{
+         return Center(child: CircularProgressIndicator());
+       }
+     },
     );
   }
 }
@@ -173,6 +187,7 @@ class SamplePlanner extends StatelessWidget {
     "JUL",
     "AUG",
     "SEP",
+    "OCT",
     "NOV",
     "DEC"
   ];
@@ -197,7 +212,7 @@ class SamplePlanner extends StatelessWidget {
                   img: plannerData.img,
                   desc: plannerData.details,
                   day: date.day.toString(),
-                  month: monthList[date.month-1],
+                  month: monthList[date.month - 1],
                 );
               });
         } else {
@@ -206,6 +221,4 @@ class SamplePlanner extends StatelessWidget {
       },
     );
   }
-
-
 }
