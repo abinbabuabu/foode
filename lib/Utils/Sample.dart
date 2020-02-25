@@ -162,6 +162,11 @@ class SampleAddress extends StatelessWidget {
                itemBuilder: (context, i) {
                  AddressData data =  list.data[i];
                  return AddressWidget(
+                   listener: (){
+                    provider.deleteAddress(data.key).then((_){
+                      Navigator.pushReplacement(context, FadeRoute(page: AddressBookPage()));
+                    });
+                   },
                    addressData: data,
                  );
                }),

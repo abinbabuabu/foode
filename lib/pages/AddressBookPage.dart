@@ -52,7 +52,7 @@ class AddressBookPage extends StatelessWidget {
                                   text: "Add Location",
                                   listener: () {
                                     Navigator.pushReplacement(context,
-                                        SlideUpRoute(page: MapPage()));
+                                        FadeRoute(page: MapPage()));
                                   },
                                 ),
                               ),

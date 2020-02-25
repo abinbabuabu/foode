@@ -258,11 +258,11 @@ class MealDetailPage extends StatelessWidget {
   }
 
   Widget selectUnderLine(String name) {
-    if (name.length > 10)
+    if (name.length > 20)
       return mDivider(
         color: 0xFFFFD00A,
         height: 4,
-        width: 92,
+        width: 102,
       );
     else {
       return mDivider(

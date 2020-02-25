@@ -14,14 +14,26 @@ class MapPage extends StatelessWidget {
   PredictionResult clickedResult;
   static const LatLng _center = const LatLng(12.9715987, 77.59456269999998);
   LatLng _current = _center;
+  double _height;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    _height = MediaQuery.of(context).size.height;
+    _height = _height - (_height / 2.3);
     var provider = Provider.of<MapProvider>(context);
     var dbProvider = Provider.of<FirebaseProvider>(context);
 
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomPadding: false,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: new IconButton(
+            icon: new Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop()),
+        elevation: 0,
+      ),
       body: SafeArea(
         child: Container(
           color: Colors.white,
@@ -66,7 +78,7 @@ class MapPage extends StatelessWidget {
               ),
               Container(
                   color: Colors.grey,
-                  height: MediaQuery.of(context).size.height - 240,
+                  height: _height,
                   child: GoogleMap(
                     markers: provider.markers,
                     myLocationButtonEnabled: true,
@@ -111,8 +123,16 @@ class MapPage extends StatelessWidget {
                       dbProvider.addAddress(dbProvider.tempAddress).then((val) {
                         if (val) {
                           print("address Added");
-                        } else
-                          print("Failed");
+                          SnackBar snack = SnackBar(
+                            content: Text("Address Added Successfully"),
+                          );
+                          _scaffoldKey.currentState.showSnackBar(snack);
+                        } else {
+                          SnackBar snack = SnackBar(
+                            content: Text("Failed Adding address"),
+                          );
+                          _scaffoldKey.currentState.showSnackBar(snack);
+                        }
                       });
                     }
                   });

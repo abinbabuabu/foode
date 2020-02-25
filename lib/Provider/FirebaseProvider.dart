@@ -19,12 +19,10 @@ class FirebaseProvider extends ChangeNotifier {
 
   FirebaseProvider.instantiate() {
     _firebase = FirebaseDatabase.instance.reference();
-
   }
 
   Future<FirebaseUser> getUuid() async {
-    var user = await FirebaseAuth.instance.currentUser();
-    return user;
+    return await FirebaseAuth.instance.currentUser();
   }
 
   Future<List<MealData>> retrieveLunch() async {
@@ -65,11 +63,12 @@ class FirebaseProvider extends ChangeNotifier {
 
   Future<bool> addAddress(AddressData addressData) async {
     _user = await FirebaseAuth.instance.currentUser();
+    var key = _firebase.child("AppData").child(_user.uid).child("Address").push().key;
     bool result = await _firebase
         .child("AppData")
         .child(_user.uid)
         .child("Address")
-        .push()
+        .child(key)
         .set(<String, String>{
       "name": addressData.name,
       "locationName": addressData.locationName,
@@ -77,7 +76,8 @@ class FirebaseProvider extends ChangeNotifier {
       "streetName": addressData.streetName,
       "landMark": addressData.landMark,
       "lat": addressData.lat,
-      "lng": addressData.lng
+      "lng": addressData.lng,
+      "key":key
     }).then((val) {
       return true;
     }).catchError((e) {
@@ -126,6 +126,11 @@ class FirebaseProvider extends ChangeNotifier {
     });
     plannerList.sort((a, b) => a.date.compareTo(b.date));
     return plannerList;
+  }
+
+  Future<void> deleteAddress(String id) async {
+    var userId = await getUuid();
+    return _firebase.child("AppData").child(userId.uid).child("Address").child(id).remove();
   }
 
 

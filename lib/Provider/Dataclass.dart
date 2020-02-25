@@ -144,13 +144,14 @@ class AddressData {
   String landMark = "";
   String lat = "";
   String lng = "";
+  String key;
 
   AddressData(
       {@required this.name,
       @required this.locationName,
       @required this.buildingName,
       @required this.streetName,
-      this.landMark});
+      this.landMark,this.key});
 
   AddressData.fromSnap(Map<dynamic, dynamic> map) {
     name = map["name"].toString().toLowerCase();
@@ -158,15 +159,16 @@ class AddressData {
     buildingName = map["buildingName"].toString().toLowerCase();
     streetName = map["streetName"].toString().toLowerCase();
     landMark = map["landMark"].toString().toLowerCase();
+    key = map["key"].toString();
     capitalise();
   }
 
   capitalise() {
     name = S.capitalizeW(name);
-    locationName = S.capitalize(locationName);
-    buildingName = S.capitalize(buildingName);
-    streetName = S.capitalize(streetName);
-    landMark = S.capitalize(landMark);
+    locationName = S.capitalizeW(locationName);
+    buildingName = S.capitalizeW(buildingName);
+    streetName = S.capitalizeW(streetName);
+    landMark = S.capitalizeW(landMark);
   }
 }
 

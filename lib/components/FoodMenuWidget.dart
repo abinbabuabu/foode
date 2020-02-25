@@ -33,7 +33,7 @@ class FoodMenuWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             FadeInImage.assetNetwork(
-              placeholder:"placeholder.jpg",
+              placeholder:"assets/img/placeholder.jpg",
               image: data.coverImgUrl,
               height: 144,
               fit: BoxFit.fill,

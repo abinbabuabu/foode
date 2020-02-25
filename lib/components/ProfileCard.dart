@@ -30,18 +30,24 @@ class ProfileCard extends StatelessWidget {
                 ])),
         child: Padding(
           padding: const EdgeInsets.only(top: 16.0, bottom: 16.0, left: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
             children: <Widget>[
-              Text("Mobile Number",
-                style: TextStyle(fontSize: 10, color: Colors.grey),),
-              SizedBox(height: 4,),
-              Text(
-                mb,
-                style: TextStyle(
-                    fontFamily: "MontserratB",
-                    color: Colors.black,
-                    fontSize: 16),
+              Image.asset("assets/img/user.png"),
+              SizedBox(width: 20,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("Mobile Number",
+                    style: TextStyle(fontSize: 10, color: Colors.grey),),
+                  SizedBox(height: 4,),
+                  Text(
+                    mb,
+                    style: TextStyle(
+                        fontFamily: "MontserratB",
+                        color: Colors.black,
+                        fontSize: 16),
+                  ),
+                ],
               ),
             ],
           ),
