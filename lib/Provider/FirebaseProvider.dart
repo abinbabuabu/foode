@@ -63,11 +63,12 @@ class FirebaseProvider extends ChangeNotifier {
 
   Future<bool> addAddress(AddressData addressData) async {
     _user = await FirebaseAuth.instance.currentUser();
-    var key = _firebase.child("AppData").child(_user.uid).child("Address").push().key;
+    var key =
+        _firebase.child("AppData").child("Address").child(_user.uid).push().key;
     bool result = await _firebase
         .child("AppData")
-        .child(_user.uid)
         .child("Address")
+        .child(_user.uid)
         .child(key)
         .set(<String, String>{
       "name": addressData.name,
@@ -77,7 +78,7 @@ class FirebaseProvider extends ChangeNotifier {
       "landMark": addressData.landMark,
       "lat": addressData.lat,
       "lng": addressData.lng,
-      "key":key
+      "key": key
     }).then((val) {
       return true;
     }).catchError((e) {
@@ -91,8 +92,8 @@ class FirebaseProvider extends ChangeNotifier {
     _user = await FirebaseAuth.instance.currentUser();
     var data = await _firebase
         .child("AppData")
-        .child(_user.uid)
         .child("Address")
+        .child(_user.uid)
         .once()
         .catchError((error) {});
     Map<dynamic, dynamic> _resultMap = data.value;
@@ -130,8 +131,34 @@ class FirebaseProvider extends ChangeNotifier {
 
   Future<void> deleteAddress(String id) async {
     var userId = await getUuid();
-    return _firebase.child("AppData").child(userId.uid).child("Address").child(id).remove();
+    return _firebase
+        .child("AppData")
+        .child("Address")
+        .child(userId.uid)
+        .child(id)
+        .remove();
   }
 
-
+  Future<List<SubscriptionData>> getSubscription() async {
+    List<SubscriptionData> _list = List();
+    print("Subscription Clae");
+    _user = await FirebaseAuth.instance.currentUser();
+    var data = await _firebase
+        .child("AppData")
+        .child("subscriptions")
+        .child(_user.uid)
+        .once()
+        .catchError((error) {
+          print(error);
+    });
+    Map<dynamic, dynamic> _resultMap = data.value;
+    _resultMap.forEach((key, value) {
+      SubscriptionData _subscriptionData = SubscriptionData.fromSnap(value);
+      print(_subscriptionData.startDate);
+      print(_subscriptionData.endDate);
+      _list.add(_subscriptionData);
+    });
+     _list.sort((a,b)=> a.id.compareTo(b.id));
+     return _list;
+  }
 }

@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:foodie/Provider/FirebaseProvider.dart';
 import 'package:foodie/Provider/MapProvider.dart';
 import 'package:foodie/Provider/PlacesProvider.dart';
+import 'package:foodie/pages/LoginPage.dart';
+import 'package:foodie/pages/Splash.dart';
 import 'package:foodie/pages/TabPage.dart';
 import 'package:provider/provider.dart';
 

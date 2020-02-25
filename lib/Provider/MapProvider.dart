@@ -11,7 +11,7 @@ import 'package:location/location.dart' as LocationManager;
 import 'Dataclass.dart';
 
 
-const googleApiKey = "AIzaSyCI-g_7P0gWVOgzVbi1NA6YBXKOP0fAUuY";
+const googleApiKey = "AIzaSyCCw3r5iwNZTyQDJL8XCbNTgGSWeYbnmnA";
 
 class MapProvider with ChangeNotifier {
   final geolocator = Geolocator()..forceAndroidLocationManager;

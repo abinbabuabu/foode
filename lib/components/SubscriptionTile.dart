@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SubscriptionTile extends StatelessWidget {
+  String id;
+  String endDate;
+  String startDate;
+  SubscriptionTile({@required this.id,this.startDate,this.endDate });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +28,7 @@ class SubscriptionTile extends StatelessWidget {
                 height: 6,
               ),
               Text(
-                "00121",
+                id,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 14,
@@ -43,7 +47,7 @@ class SubscriptionTile extends StatelessWidget {
               SizedBox(
                 height: 6,
               ),
-              Text("22 - 2 -2020",style: TextStyle(
+              Text(startDate,style: TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                   fontFamily: "MontserratBB"))
@@ -60,7 +64,7 @@ class SubscriptionTile extends StatelessWidget {
               SizedBox(
                 height: 6,
               ),
-              Text("28 - 2 -2020",style: TextStyle(
+              Text(endDate,style: TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                   fontFamily: "MontserratBB"))

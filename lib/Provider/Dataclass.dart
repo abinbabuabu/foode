@@ -13,6 +13,10 @@ class S {
     return v.replaceAllMapped(RegExp(r'(^\w{1})|(\s{1}\w{1})'),
         (Match m) => '${m.group(0).toUpperCase()}');
   }
+
+  static String dateToString(DateTime d) {
+    return "${d.day}-${d.month}-${d.year}";
+  }
 }
 
 class PredictionResult {
@@ -151,7 +155,8 @@ class AddressData {
       @required this.locationName,
       @required this.buildingName,
       @required this.streetName,
-      this.landMark,this.key});
+      this.landMark,
+      this.key});
 
   AddressData.fromSnap(Map<dynamic, dynamic> map) {
     name = map["name"].toString().toLowerCase();
@@ -181,6 +186,7 @@ class PaymentData {
     @required this.desc,
   });
 }
+
 class OrderData {
   String userId;
   String paymentId;
@@ -237,7 +243,7 @@ class PlannerData {
     dateConvert();
   }
 
-  lower(){
+  lower() {
     name = name.toLowerCase();
     details = details.toLowerCase();
   }
@@ -252,5 +258,54 @@ class PlannerData {
     int month = int.parse(dates.substring(3, 5));
     int year = int.parse(dates.substring(6, 10));
     date = DateTime(year, month, day);
+  }
+}
+
+class SubscriptionData {
+  String id = "";
+  DateTime startDate;
+  DateTime endDate;
+  String date = "";
+  int days;
+  bool weekDays;
+
+  SubscriptionData.fromSnap(Map<dynamic, dynamic> map) {
+    id = map["subscriptionIds"].toString();
+    date = map["startDate"];
+    startDate = dateConvert(date);
+    days = int.parse(map["days"].toString());
+    weekDays = stringToBool(map["weekEnds"]);
+    endDate = calculateEndDate(startDate, days, weekDays);
+  }
+
+  DateTime dateConvert(String dates) {
+    int year = int.parse(dates.substring(0, 4));
+    int month = int.parse(dates.substring(5, 7));
+    int day = int.parse(dates.substring(8, 10));
+    return DateTime(year, month, day);
+  }
+
+  DateTime calculateEndDate(DateTime start, int _days, bool weekend) {
+    DateTime end = start;
+    if (!weekend) {
+      int count = 0;
+      while (count <= _days) {
+        end = end.add(Duration(days: 1));
+        count++;
+        if (end.weekday == DateTime.saturday) end = end.add(Duration(days: 1));
+        if (start.weekday == DateTime.sunday) end = end.add(Duration(days: 1));
+      }
+      return end;
+    } else {
+      return start.add(Duration(days: _days-1));
+    }
+  }
+
+  bool stringToBool(String s) {
+    s = s.toLowerCase();
+    if (s == "true")
+      return true;
+    else
+      return false;
   }
 }

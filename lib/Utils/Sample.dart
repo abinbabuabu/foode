@@ -137,14 +137,28 @@ class SampleAccount extends StatelessWidget {
 class SampleSubscription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<String> list = ["Subscriptions", "Address Book", "Support", "Logout"];
-    return Container(
-      child: ListView.builder(
-          itemCount: 4,
-          itemBuilder: (context, i) {
-            return SubscriptionTile();
-          }),
-    );
+    var provider = Provider.of<FirebaseProvider>(context);
+    return FutureBuilder(
+        future: provider.getSubscription(),
+        builder: (context, list) {
+          if (list.hasData) {
+            return Container(
+              child: ListView.builder(
+                  itemCount: list.data.length,
+                  itemBuilder: (context, i) {
+                    SubscriptionData _sub = list.data[i];
+                    return SubscriptionTile(
+                      id: _sub.id,
+                      startDate: S.dateToString(_sub.startDate),
+                      endDate: S.dateToString(_sub.endDate),
+                    );
+                  }),
+            );
+          } else {
+            print("Sample Subscription is null");
+            return Container();
+          }
+        });
   }
 }
 
@@ -154,28 +168,28 @@ class SampleAddress extends StatelessWidget {
     var provider = Provider.of<FirebaseProvider>(context);
     return FutureBuilder(
       future: provider.getAddresses(),
-     builder: (context,list){
-       if(list.hasData){
-         return Container(
-           child: ListView.builder(
-               itemCount: list.data.length,
-               itemBuilder: (context, i) {
-                 AddressData data =  list.data[i];
-                 return AddressWidget(
-                   listener: (){
-                    provider.deleteAddress(data.key).then((_){
-                      Navigator.pushReplacement(context, FadeRoute(page: AddressBookPage()));
-                    });
-                   },
-                   addressData: data,
-                 );
-               }),
-         );
-       }
-       else{
-         return Center(child: CircularProgressIndicator());
-       }
-     },
+      builder: (context, list) {
+        if (list.hasData) {
+          return Container(
+            child: ListView.builder(
+                itemCount: list.data.length,
+                itemBuilder: (context, i) {
+                  AddressData data = list.data[i];
+                  return AddressWidget(
+                    listener: () {
+                      provider.deleteAddress(data.key).then((_) {
+                        Navigator.pushReplacement(
+                            context, FadeRoute(page: AddressBookPage()));
+                      });
+                    },
+                    addressData: data,
+                  );
+                }),
+          );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }

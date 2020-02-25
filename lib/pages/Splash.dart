@@ -10,7 +10,7 @@ class Splash extends StatelessWidget {
           child: Align(
               alignment: Alignment.center,
               child: Container(
-                child: Image.asset("assets/img/logo.png"),
+                child: Image.asset("assets/img/foodie.png"),
               ))),
     );
   }

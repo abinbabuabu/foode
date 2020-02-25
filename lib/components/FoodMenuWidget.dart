@@ -36,7 +36,7 @@ class FoodMenuWidget extends StatelessWidget {
               placeholder:"assets/img/placeholder.jpg",
               image: data.coverImgUrl,
               height: 144,
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
               width: double.infinity,
             ),
             Padding(
