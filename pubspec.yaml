@@ -62,6 +62,10 @@ flutter:
     - assets/img/foodie.png
     - assets/img/placeholder.jpg
     - assets/img/user.png
+    - assets/img/nosub.png
+    - assets/img/loginimg.jpg
+    - assets/img/noaddress.png
+    - assets/img/error.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

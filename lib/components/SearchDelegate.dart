@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:foodie/Provider/Dataclass.dart';
 import 'package:foodie/Provider/PlacesProvider.dart';
 import 'package:provider/provider.dart';
 
 import 'SearchItem.dart';
 
-
 const googleApiKey = "AIzaSyDmFsYarIa5yJppIMjJ0zph2e3X8bWI0tA";
 const baseUrl = "http://maps.googleapis.com";
 
 class CustomSearch extends SearchDelegate {
   PlacesProvider provider;
-
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -25,6 +24,8 @@ class CustomSearch extends SearchDelegate {
       )
     ];
   }
+
+
 
   @override
   Widget buildLeading(BuildContext context) {
@@ -83,8 +84,8 @@ class CustomSearch extends SearchDelegate {
     return Container();
   }
 
-  Future<List<PredictionResult>> returnDetails(PredictionResult item,
-      var result, BuildContext context) async {
+  Future<List<PredictionResult>> returnDetails(
+      PredictionResult item, var result, BuildContext context) async {
     var decode = await provider.decodeAndSelectPlace(item.id);
     item.latLng = decode;
     result.add(item);

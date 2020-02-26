@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 
 enum PhoneAuthState {
@@ -14,20 +15,23 @@ enum PhoneAuthState {
   newUser
 }
 
-class LoginProvider{
+class LoginProvider {
   static FirebaseAuth firebaseAuth;
   static var _authCredential, actualCode, phone, status;
   static StreamController<String> statusStream;
   static StreamController<PhoneAuthState> phoneAuthState;
   static Stream stateStream;
 
-
-
   static void AuthStateChanged(FirebaseUser user) {
     if (user == null) {
       addStatus("Not Logged In");
       addState(PhoneAuthState.Failed);
     } else {
+      FirebaseDatabase.instance
+          .reference()
+          .child("Userss")
+          .child(user.uid)
+          .set(<String, String>{"uuid": user.uid, "phone": user.phoneNumber});
       if (user.metadata.lastSignInTime == user.metadata.creationTime) {
         addStatus("New User");
         addState(PhoneAuthState.newUser);
@@ -38,7 +42,7 @@ class LoginProvider{
     }
   }
 
- static instantiate() async{
+  static instantiate() async {
     firebaseAuth = await FirebaseAuth.instance;
     firebaseAuth.onAuthStateChanged.listen(AuthStateChanged);
     statusStream = StreamController();
@@ -113,7 +117,7 @@ class LoginProvider{
     firebaseAuth.signInWithCredential(_authCredential).then((user) async {
       addStatus('Authentication successful');
       addState(PhoneAuthState.Verified);
-     // onAuthenticationSuccessful();
+      // onAuthenticationSuccessful();
     }).catchError((error) {
       addState(PhoneAuthState.Error);
       addStatus(

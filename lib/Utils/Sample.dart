@@ -31,6 +31,23 @@ class SampleLunch extends StatelessWidget {
                   data: data,
                 );
               });
+        } else if (list.hasError) {
+          return Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                    height: 220,
+                    width: 220,
+                    child: Image.asset("assets/img/noaddress.png")),
+                SizedBox(
+                  height: 16,
+                ),
+                Text("Add an Address !")
+              ],
+            ),
+          );
         } else {
           return Center(child: CircularProgressIndicator());
         }
@@ -55,6 +72,23 @@ class SampleBreakFast extends StatelessWidget {
                   data: breakFastData,
                 );
               });
+        } else if (list.hasError) {
+          return Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                    height: 220,
+                    width: 220,
+                    child: Image.asset("assets/img/noaddress.png")),
+                SizedBox(
+                  height: 16,
+                ),
+                Text("Add an Address !")
+              ],
+            ),
+          );
         } else {
           return Center(child: CircularProgressIndicator());
         }
@@ -79,6 +113,23 @@ class SampleDinner extends StatelessWidget {
                   data: dinnerDataData,
                 );
               });
+        } else if (list.hasError) {
+          return Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                    height: 220,
+                    width: 220,
+                    child: Image.asset("assets/img/noaddress.png")),
+                SizedBox(
+                  height: 16,
+                ),
+                Text("Add an Address !")
+              ],
+            ),
+          );
         } else {
           return Center(child: CircularProgressIndicator());
         }
@@ -154,9 +205,29 @@ class SampleSubscription extends StatelessWidget {
                     );
                   }),
             );
+          } else if (list.hasError) {
+            return Center(
+              child: Container(
+                height: 260,
+                width: 260,
+                child: Column(
+                  children: <Widget>[
+                    Image.asset("assets/img/nosub.png"),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Text("Seems like no subscription made")
+                  ],
+                ),
+              ),
+            );
           } else {
-            print("Sample Subscription is null");
-            return Container();
+            return Align(
+                alignment: Alignment.topCenter,
+                child: RefreshProgressIndicator(
+                  backgroundColor: Colors.white,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                ));
           }
         });
   }
@@ -185,6 +256,23 @@ class SampleAddress extends StatelessWidget {
                     addressData: data,
                   );
                 }),
+          );
+        } else if (list.hasError) {
+          return Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                    height: 220,
+                    width: 220,
+                    child: Image.asset("assets/img/noaddress.png")),
+                SizedBox(
+                  height: 16,
+                ),
+                Text("Add an Address !")
+              ],
+            ),
           );
         } else {
           return Center(child: CircularProgressIndicator());

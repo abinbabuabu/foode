@@ -31,6 +31,12 @@ class _LoginPageState extends State<LoginPage> {
     LoginProvider.instantiate();
     _focusNode.addListener(toggleVisibility);
     super.initState();
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Color(0xFFFFF3DD),
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: Colors.white));
   }
 
   @override
@@ -43,7 +49,14 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             Container(
               height: MediaQuery.of(context).size.height,
-              color: Color(0xFFFFF3DD),
+              color: Color(0xFF754F18),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: SizedBox(
+                    height: 500,
+                    width: MediaQuery.of(context).size.width,
+                    child: Image.asset("assets/img/loginimg.jpg",fit: BoxFit.fill,)),
+              ),
             ),
             Positioned(
               bottom: 0,
@@ -78,10 +91,10 @@ class _LoginPageState extends State<LoginPage> {
                       child: Form(
                           key: _formKey,
                           child: TextFormField(
-                            onChanged: (value){
+                            onChanged: (value) {
                               phone = value;
                             },
-                            onFieldSubmitted: (value){
+                            onFieldSubmitted: (value) {
                               if (_formKey.currentState.validate()) {
                                 setState(() {
                                   _visibility = false;
@@ -90,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                                 print("Next");
                               }
                             },
-                            keyboardType:TextInputType.phone,
+                            keyboardType: TextInputType.phone,
                             focusNode: _focusNode,
                             validator: (value) {
                               if (value.length != 10) {

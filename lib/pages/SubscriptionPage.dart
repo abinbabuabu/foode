@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:foodie/Provider/Dataclass.dart';
 import 'package:foodie/Provider/FirebaseProvider.dart';
 import 'package:foodie/components/BillWidget.dart';
+import 'package:foodie/components/Button.dart';
+import 'package:foodie/components/RouteAnimation.dart';
 import 'package:foodie/components/TextUndelineWidget.dart';
 import 'package:foodie/components/date_picker_timeline.dart';
+import 'package:foodie/pages/AddressBookPage.dart';
+import 'package:foodie/pages/MapPage.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionPage extends StatefulWidget {
@@ -31,7 +35,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     //selectedDate = selectedDate.add(Duration(days: 1));
     var provider = Provider.of<FirebaseProvider>(context, listen: false);
     addressList = provider.addressList;
-    currentAddress = addressList[0];
+    if (addressList.isNotEmpty) currentAddress = addressList[0];
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -59,15 +63,15 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: DatePickerTimeline(selectedDate,
                         dayTextStyle:
-                            TextStyle(fontFamily: "MontserratB", fontSize: 10),
+                        TextStyle(fontFamily: "MontserratB", fontSize: 10),
                         monthTextStyle:
-                            TextStyle(fontFamily: "MontserratB", fontSize: 8),
+                        TextStyle(fontFamily: "MontserratB", fontSize: 8),
                         dateTextStyle:
-                            TextStyle(fontFamily: "MontserratBB", fontSize: 25),
+                        TextStyle(fontFamily: "MontserratBB", fontSize: 25),
                         selectionColor: Color(0xFFFFE200),
                         onDateChange: (date) {
-                      selectedDate = date;
-                    }),
+                          selectedDate = date;
+                        }),
                   ),
                   SizedBox(
                     height: 4,
@@ -89,24 +93,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   ),
                   TextUnderlineWidget(text: "Choose Address"),
                   Container(
-                    padding: EdgeInsets.all(8.0),
-                    height: 120,
-                    child: ListView.builder(
-                        itemCount: addressList.length,
-                        itemBuilder: (context, i) {
-                          return Row(
-                            children: <Widget>[
-                              Radio(
-                                activeColor: Colors.green,
-                                groupValue: radioValue,
-                                value: i,
-                                onChanged: addressChange,
-                              ),
-                              Text("${addressList[i].name}")
-                            ],
-                          );
-                        }),
-                  ),
+                      padding: EdgeInsets.all(8.0),
+                      height: 120,
+                      child: choose(addressList)),
                   TextUnderlineWidget(text: "Total Bill"),
                   BillWidget(
                     homeName: widget.data.homeName,
@@ -126,7 +115,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   height: 43,
                   minWidth: double.infinity,
                   child: RaisedButton(
-                    color: Theme.of(context).accentColor,
+                    color: Theme
+                        .of(context)
+                        .accentColor,
                     onPressed: () {
                       if (checkForSatSun()) {
                         provider.getUuid().then((uuid) {
@@ -191,7 +182,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         mealType: mealType,
         userId: uuid,
         startDate:
-            "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}",
+        "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}",
         paymentId: "sampleII",
         address: "${currentAddress.locationName},"
             "${currentAddress.buildingName},"
@@ -207,7 +198,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       if (selectedDate.weekday == 6 || selectedDate.weekday == 7) {
         var snack = SnackBar(
           content:
-              Text("Please tick the Check Box to Place Order on Sat / Sun"),
+          Text("Please tick the Check Box to Place Order on Sat / Sun"),
         );
         scaffoldKey.currentState.showSnackBar(snack);
         return false;
@@ -233,5 +224,44 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     }
   }
 
-
+  Widget choose(List<AddressData> list) {
+    if (list.isEmpty || list.length == 0) {
+      print("list is Empty");
+      return Center(
+        child: SizedBox(
+          height: 40,
+          width: 160,
+          child: OutlineButton(
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: Text("Add Address", style: TextStyle(color: Colors.black),),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pushReplacement(context, FadeRoute(page: AddressBookPage()));
+            },
+            splashColor: Colors.green,
+            highlightedBorderColor: Colors.green,
+            borderSide: BorderSide(color: Colors.green),
+          ),
+        ),
+      );
+    } else {
+      print(list.length);
+      return ListView.builder(
+          itemCount: addressList.length,
+          itemBuilder: (context, i) {
+            return Row(
+              children: <Widget>[
+                Radio(
+                  activeColor: Colors.green,
+                  groupValue: radioValue,
+                  value: i,
+                  onChanged: addressChange,
+                ),
+                Text("${addressList[i].name}")
+              ],
+            );
+          });
+    }
+  }
 }

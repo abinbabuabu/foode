@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_image/network.dart';
 import 'package:foodie/Provider/Dataclass.dart';
 import 'package:foodie/Utils/Sample.dart';
@@ -19,15 +18,8 @@ class MealDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.white,
-        systemNavigationBarIconBrightness: Brightness.dark));
-
     double height = MediaQuery.of(context).size.height;
     double _topHeight = height / 4;
-    double _bottomHeight = height - _topHeight - 24;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -268,7 +260,7 @@ class MealDetailPage extends StatelessWidget {
       return mDivider(
         color: 0xFFFFD00A,
         height: 4,
-        width: name.length *7.2,
+        width: name.length * 7.2,
       );
     }
   }

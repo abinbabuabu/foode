@@ -88,7 +88,6 @@ class FirebaseProvider extends ChangeNotifier {
   }
 
   Future<List<AddressData>> getAddresses() async {
-    addressList = List();
     _user = await FirebaseAuth.instance.currentUser();
     var data = await _firebase
         .child("AppData")
@@ -97,6 +96,7 @@ class FirebaseProvider extends ChangeNotifier {
         .once()
         .catchError((error) {});
     Map<dynamic, dynamic> _resultMap = data.value;
+    addressList = List();
     _resultMap.forEach((key, value) {
       AddressData addressData = AddressData.fromSnap(value);
       addressList.add(addressData);
@@ -149,7 +149,7 @@ class FirebaseProvider extends ChangeNotifier {
         .child(_user.uid)
         .once()
         .catchError((error) {
-          print(error);
+      print(error);
     });
     Map<dynamic, dynamic> _resultMap = data.value;
     _resultMap.forEach((key, value) {
@@ -158,7 +158,7 @@ class FirebaseProvider extends ChangeNotifier {
       print(_subscriptionData.endDate);
       _list.add(_subscriptionData);
     });
-     _list.sort((a,b)=> a.id.compareTo(b.id));
-     return _list;
+    _list.sort((a, b) => a.id.compareTo(b.id));
+    return _list;
   }
 }

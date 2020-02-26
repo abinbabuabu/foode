@@ -49,7 +49,7 @@ class MapPage extends StatelessWidget {
                 onTap: () {
                   print("Clicked Search");
                   var result =
-                      showSearch(context: context, delegate: CustomSearch());
+                      showSearch(context: context, delegate: CustomSearch(),);
                   result.then((value) {
                     for (var i in value) {
                       clickedResult = i;
@@ -124,7 +124,7 @@ class MapPage extends StatelessWidget {
                         if (val) {
                           print("address Added");
                           SnackBar snack = SnackBar(
-                            content: Text("Address Added Successfully"),
+                            content: Text("Address Added Successfully ✔️"),
                           );
                           _scaffoldKey.currentState.showSnackBar(snack);
                         } else {

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:foodie/Provider/LoginProvider.dart';
 import 'package:foodie/components/Button.dart';
@@ -28,6 +29,11 @@ class _OtpPageState extends State<OtpPage> {
   void initState() {
     super.initState();
     autoCodeRetrieve();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: Colors.white));
   }
 
   @override
