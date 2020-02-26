@@ -40,11 +40,11 @@ class SampleLunch extends StatelessWidget {
                 SizedBox(
                     height: 220,
                     width: 220,
-                    child: Image.asset("assets/img/noaddress.png")),
+                    child: Image.asset("assets/img/error.png")),
                 SizedBox(
                   height: 16,
                 ),
-                Text("Add an Address !")
+                Text("Oops! Something Went Wrong!")
               ],
             ),
           );
@@ -81,11 +81,11 @@ class SampleBreakFast extends StatelessWidget {
                 SizedBox(
                     height: 220,
                     width: 220,
-                    child: Image.asset("assets/img/noaddress.png")),
+                    child: Image.asset("assets/img/error.png")),
                 SizedBox(
                   height: 16,
                 ),
-                Text("Add an Address !")
+                Text("Oops! Something Went Wrong!")
               ],
             ),
           );
@@ -122,11 +122,11 @@ class SampleDinner extends StatelessWidget {
                 SizedBox(
                     height: 220,
                     width: 220,
-                    child: Image.asset("assets/img/noaddress.png")),
+                    child: Image.asset("assets/img/error.png")),
                 SizedBox(
                   height: 16,
                 ),
-                Text("Add an Address !")
+                Text("Oops! Something Went Wrong")
               ],
             ),
           );

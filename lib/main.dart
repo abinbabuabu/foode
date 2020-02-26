@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
               bottomSheetTheme:
                   BottomSheetThemeData(backgroundColor: Colors.transparent),
               fontFamily: "Montseratt"),
-          home:TabPage()),
+          home:Splash()),
     );
   }
 }

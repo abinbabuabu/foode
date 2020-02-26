@@ -9,6 +9,7 @@ import 'package:foodie/components/TextUndelineWidget.dart';
 import 'package:foodie/components/date_picker_timeline.dart';
 import 'package:foodie/pages/AddressBookPage.dart';
 import 'package:foodie/pages/MapPage.dart';
+import 'package:foodie/pages/RazorPayPage.dart';
 import 'package:provider/provider.dart';
 
 class SubscriptionPage extends StatefulWidget {
@@ -63,15 +64,15 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: DatePickerTimeline(selectedDate,
                         dayTextStyle:
-                        TextStyle(fontFamily: "MontserratB", fontSize: 10),
+                            TextStyle(fontFamily: "MontserratB", fontSize: 10),
                         monthTextStyle:
-                        TextStyle(fontFamily: "MontserratB", fontSize: 8),
+                            TextStyle(fontFamily: "MontserratB", fontSize: 8),
                         dateTextStyle:
-                        TextStyle(fontFamily: "MontserratBB", fontSize: 25),
+                            TextStyle(fontFamily: "MontserratBB", fontSize: 25),
                         selectionColor: Color(0xFFFFE200),
                         onDateChange: (date) {
-                          selectedDate = date;
-                        }),
+                      selectedDate = date;
+                    }),
                   ),
                   SizedBox(
                     height: 4,
@@ -115,14 +116,19 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   height: 43,
                   minWidth: double.infinity,
                   child: RaisedButton(
-                    color: Theme
-                        .of(context)
-                        .accentColor,
-                    onPressed: () {
+                    color: Theme.of(context).accentColor,
+                    onPressed: () async {
                       if (checkForSatSun()) {
                         provider.getUuid().then((uuid) {
-                          makeOrdersData(uuid.uid).then((value) {
-                            provider.postOrder(value);
+                          makeOrdersData(uuid.uid, uuid.phoneNumber)
+                              .then((value) {
+                            Navigator.pop(context);
+                            Navigator.pushReplacement(
+                                context,
+                                FadeRoute(
+                                    page: RazorpayPage(
+                                  orderData: value,
+                                )));
                           });
                         });
                       }
@@ -152,7 +158,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     currentAddress = addressList[T];
   }
 
-  Future<OrderData> makeOrdersData(String uuid) async {
+  Future<OrderData> makeOrdersData(String uuid, String phoneNumber) async {
     int amountPaid = 0;
     String mealType;
 
@@ -177,13 +183,15 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     }
 
     var order = OrderData.make(
-        amountPaid: amountPaid.toString(),
+        desc: widget.data.homeDesc,
+        phone: phoneNumber,
+        amountPaid: amountPaid,
         days: widget.days.toString(),
         mealType: mealType,
         userId: uuid,
         startDate:
-        "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}",
-        paymentId: "sampleII",
+            "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}",
+        paymentId: "null",
         address: "${currentAddress.locationName},"
             "${currentAddress.buildingName},"
             "${currentAddress.streetName},"
@@ -198,7 +206,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       if (selectedDate.weekday == 6 || selectedDate.weekday == 7) {
         var snack = SnackBar(
           content:
-          Text("Please tick the Check Box to Place Order on Sat / Sun"),
+              Text("Please tick the Check Box to Place Order on Sat / Sun"),
         );
         scaffoldKey.currentState.showSnackBar(snack);
         return false;
@@ -233,11 +241,15 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
           width: 160,
           child: OutlineButton(
             shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: Text("Add Address", style: TextStyle(color: Colors.black),),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: Text(
+              "Add Address",
+              style: TextStyle(color: Colors.black),
+            ),
             onPressed: () {
               Navigator.pop(context);
-              Navigator.pushReplacement(context, FadeRoute(page: AddressBookPage()));
+              Navigator.pushReplacement(
+                  context, FadeRoute(page: AddressBookPage()));
             },
             splashColor: Colors.green,
             highlightedBorderColor: Colors.green,

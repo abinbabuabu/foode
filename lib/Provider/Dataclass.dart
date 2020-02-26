@@ -177,26 +177,20 @@ class AddressData {
   }
 }
 
-class PaymentData {
-  int amount;
-  String desc;
 
-  PaymentData({
-    @required this.amount,
-    @required this.desc,
-  });
-}
 
 class OrderData {
   String userId;
   String paymentId;
-  String amountPaid;
+  int amountPaid;
+  String desc;
   String address;
   String startDate;
   String days;
   String mealType;
   String weekEnds;
   String chefId;
+  String phone;
 
   OrderData.make(
       {@required this.amountPaid,
@@ -207,7 +201,7 @@ class OrderData {
       @required this.days,
       @required this.mealType,
       @required this.chefId,
-      @required this.weekEnds});
+      @required this.weekEnds,@required this.phone,@required this.desc});
 
   Map<String, dynamic> toJson() => {
         'userId': userId,

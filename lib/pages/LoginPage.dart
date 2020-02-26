@@ -28,7 +28,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    LoginProvider.instantiate();
     _focusNode.addListener(toggleVisibility);
     super.initState();
 
