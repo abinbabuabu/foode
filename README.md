@@ -1,6 +1,6 @@
 # foodie
 
-A Daily Food Application
+Meal Subscription Application
 
 ## Getting Started
 
